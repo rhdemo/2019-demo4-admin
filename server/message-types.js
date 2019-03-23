@@ -1,8 +1,12 @@
-module.exports = {
-  MOTION: "motion",
+module.exports.INCOMING_MESSAGE_TYPES = {
   CONNECTION: "connection",
+  GAME: "game",
   PING: "ping",
-  SCORE: "score",
-  MACHINE: "machine",
   RESET: "reset"
+};
+
+module.exports.OUTGOING_MESSAGE_TYPES = {
+  HEARTBEAT: "heartbeat",
+  GAME: "game",
+  PING: "ping"
 };
