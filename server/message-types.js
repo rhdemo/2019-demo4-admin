@@ -8,5 +8,6 @@ module.exports.INCOMING_MESSAGE_TYPES = {
 module.exports.OUTGOING_MESSAGE_TYPES = {
   HEARTBEAT: "heartbeat",
   GAME: "game",
-  PING: "ping"
+  PING: "ping",
+  MACHINE: "machine"
 };
