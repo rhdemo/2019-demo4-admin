@@ -1,7 +1,7 @@
-module.exports.GAME_STATES = {
-  ACTIVE: 'active',
-  PAUSED: 'paused',
+module.exports = {
+  LOBBY: 'lobby',
   STOPPED: 'stopped',
+  PAUSED: 'paused',
   LOADING: 'loading',
-  LOBBY: "connection"
+  ACTIVE: 'active'
 };

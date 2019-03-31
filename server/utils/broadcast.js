@@ -1,8 +1,8 @@
-const log = require("../utils/log")("broadcast");
 const WebSocket = require("ws");
+const log = require("../utils/log")("broadcast");
 
 function broadcast(type, data) {
-  log.debug("broadcast", type, data);
+  // log.debug("broadcast", type, data);
   const msg = JSON.stringify({type, data});
 
   if (global.socketServer.clients) {

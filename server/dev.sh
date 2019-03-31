@@ -4,7 +4,6 @@
 MINISHIFT_IP=$(minishift ip)
 
 PORT=8082 \
-GESTURE_API_URL=http://0.0.0.0:8084 \
 DATAGRID_HOST=0.0.0.0 \
 DATAGRID_HOTROD_PORT=11222 \
 DATAGRID_CONSOLE_HOST="console-datagrid-demo.${MINISHIFT_IP}.nip.io" \

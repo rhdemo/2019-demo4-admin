@@ -1,5 +1,5 @@
 module.exports.INCOMING_MESSAGE_TYPES = {
-  CONNECTION: "connection",
+  INIT: "init",
   GAME: "game",
   PING: "ping",
   RESET: "reset"

@@ -1,28 +1,119 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useReducer} from "react";
+import Sockette from "sockette";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+import Game from "./Game/Game";
+import MachineList from "./Machine/MachineList";
+import "./App.scss";
+
+const initialState = {connection: "disconnected", machines: {}};
+
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "connection":
+      return {
+        ...state,
+        connection: action.connection
+      };
+    case "ws_message":
+      return processMessage(state, action.message);
+    default:
+      console.warn("Unhandled reducer action", action);
   }
+}
+
+function processMessage(state, message) {
+  const {type, data} = message;
+  let value = {};
+
+  switch (type) {
+    case "heartbeat":
+      value.heartbeat = new Date();
+      break;
+    case "machine":
+      let machines = state.machines || {};
+      machines[data.id] = data;
+      value = {machines};
+      break;
+    default:
+      value[type] = data;
+      break;
+  }
+  return {...state, ...value};
+}
+
+function App() {
+  const socketUrl = `ws://${window.location.host}/admin-socket`;
+
+  const [socket] = useState(connect);
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  function connect() {
+    return new Sockette(socketUrl, {
+      timeout: 10000,
+      maxAttempts: 10,
+      onopen: onWsOpen,
+      onmessage: onWsMessage,
+      onreconnect: onWsOpen,
+      onmaximum: onWsMaximum,
+      onclose: e => console.log("Closed!", e),
+      onerror: e => console.error("Error:", e)
+    });
+  }
+
+  function onWsOpen(event) {
+    dispatch({
+      type: "connection",
+      connection: "connected"
+    });
+
+    socket.json({
+      type: "init"
+    });
+  }
+
+  function onWsMessage(e) {
+    const json = JSON.parse(e.data);
+    dispatch({
+      type: "ws_message",
+      message: json
+    });
+  }
+
+  function onWsMaximum(event) {
+    dispatch({
+      type: "connection",
+      connection: "connection lost"
+    });
+  }
+
+  return (
+    <div className="app">
+      <nav className="level">
+        <div className="level-left">
+          <div className="level-item has-text-centered">
+            <div>
+              <p className="heading">{socketUrl}: {state.connection}</p>
+            </div>
+          </div>
+        </div>
+        <div className="level-right">
+          <div className="level-item has-text-centered">
+            <div>
+              <p className="heading">Last Heartbeat: {JSON.stringify(state.heartbeat)}</p>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <Game socket={socket} game={state.game} test={"hello"}/>
+
+      <MachineList machines={state.machines}/>
+      {/*<pre>*/}
+        {/*{JSON.stringify(state, null, 2)}*/}
+      {/*</pre>*/}
+    </div>
+  );
 }
 
 export default App;

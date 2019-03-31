@@ -1,5 +1,4 @@
 const uuidv4 = require('uuid/v4');
-const {DATAGRID_KEY_PREFIXES} = require("../datagrid");
 
 class Game {
   constructor() {
@@ -26,16 +25,16 @@ class Game {
     };
 
     this.damagePercent =  {
-      machine1: 100,
-      machine2: 100,
-      machine3: 100,
-      machine4: 100,
-      machine5: 100,
-      machine6: 100,
-      machine7: 100,
-      machine8: 100,
-      machine9: 100,
-      machine10: 100
+      "machine-1": 100,
+      "machine-2": 100,
+      "machine-3": 100,
+      "machine-4": 100,
+      "machine-5": 100,
+      "machine-6": 100,
+      "machine-7": 100,
+      "machine-8": 100,
+      "machine-9": 100,
+      "machine-10": 100
     }
   }
 }

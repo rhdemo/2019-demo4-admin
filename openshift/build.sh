@@ -14,7 +14,7 @@ s2i build ${GIT_REPOSITORY} --ref ${GIT_BRANCH} --context-dir /server docker.io/
 echo "Building ${UI_IMAGE_REPOSITORY}"
 cd ${DIR}/../ui
 rm -rf build
-yarn
+yarn install
 yarn build
 s2i build ./build centos/nginx-112-centos7 ${UI_IMAGE_REPOSITORY}
 

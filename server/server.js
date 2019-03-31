@@ -7,7 +7,6 @@ const {processSocketMessage} = require("./socket-handlers");
 const machines = require("./models/machines");
 const {initData, pollMachines} = require("./datagrid");
 
-console.log(process.env.PORT)
 const PORT = env.get("PORT", "8080").asIntPositive();
 const IP = process.env.IP || process.env.OPENSHIFT_NODEJS_IP || "0.0.0.0";
 
@@ -24,7 +23,6 @@ global.socketServer = new WebSocket.Server({
 });
 
 global.dataClient = null;
-global.pollInterval = null;
 
 log.info(`Started Admin server on ${IP}:${PORT}`);
 
@@ -40,6 +38,7 @@ initData()
       });
     });
     pollMachines(500);
+    pollMachines(10000, true);
   });
 
 

@@ -1,8 +1,6 @@
-const log = require("../utils/log")("socket-handlers/connection");
 const {OUTGOING_MESSAGE_TYPES} = require("../message-types");
 
-async function connectionHandler(ws, messageObj) {
-  log.debug("connectionHandler", messageObj);
+async function initHandler(ws, messageObj) {
   ws.send(JSON.stringify({type: OUTGOING_MESSAGE_TYPES.GAME, data: global.game}));
 
   for (let prop in global.machines) {
@@ -12,5 +10,4 @@ async function connectionHandler(ws, messageObj) {
 
 }
 
-
-module.exports = connectionHandler;
+module.exports = initHandler;
