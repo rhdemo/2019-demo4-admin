@@ -3,29 +3,29 @@ const {INCOMING_MESSAGE_TYPES} = require("../message-types");
 
 
 function processSocketMessage(ws, messageStr) {
-    let messageObj = JSON.parse(messageStr);
+  let messageObj = JSON.parse(messageStr);
 
-    switch (messageObj.type) {
-        case INCOMING_MESSAGE_TYPES.INIT:
-            initHandler(ws, messageObj);
-            break;
+  switch (messageObj.type) {
+    case INCOMING_MESSAGE_TYPES.INIT:
+      initHandler(ws, messageObj);
+      break;
 
-        case INCOMING_MESSAGE_TYPES.PING:
-            pingHandler(ws, messageObj);
-            break;
+    case INCOMING_MESSAGE_TYPES.PING:
+      pingHandler(ws, messageObj);
+      break;
 
-        case INCOMING_MESSAGE_TYPES.GAME:
-            gameHandler(ws, messageObj);
-            break;
+    case INCOMING_MESSAGE_TYPES.GAME:
+      gameHandler(ws, messageObj);
+      break;
 
-      case INCOMING_MESSAGE_TYPES.RESET:
-          resetHandler(ws, messageObj);
-          break;
+    case INCOMING_MESSAGE_TYPES.RESET:
+      resetHandler(ws, messageObj);
+      break;
 
-        default:
-            log.warn(`Unhandled Game Message of type "${messageStr}"`);
-            break;
-    }
+    default:
+      log.warn(`Unhandled Game Message of type "${messageStr}"`);
+      break;
+  }
 }
 
 /**
