@@ -47,4 +47,4 @@ const pingHandler = wrapMessageHandler(INCOMING_MESSAGE_TYPES.PING, function (ws
 const gameHandler = wrapMessageHandler(INCOMING_MESSAGE_TYPES.GAME, require("./game"));
 const resetHandler = wrapMessageHandler(INCOMING_MESSAGE_TYPES.RESET, require("./reset"));
 
-module.exports.processSocketMessage = processSocketMessage;
+module.exports = processSocketMessage;

@@ -6,6 +6,11 @@ class Game {
 
     this.state = "lobby";
 
+    this.shakeDemo = {
+      enabled: false,
+      multiplier: 5
+    };
+
     this.motions = {
       shake: false,
       circle: false,

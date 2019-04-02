@@ -2,6 +2,7 @@ import React, { useState, useReducer} from "react";
 import Sockette from "sockette";
 
 import Game from "./Game/Game";
+import MechanicList from "./Mechanic/MechanicList";
 import MachineList from "./Machine/MachineList";
 import "./App.scss";
 
@@ -34,6 +35,11 @@ function processMessage(state, message) {
       let machines = state.machines || {};
       machines[data.id] = data;
       value = {machines};
+      break;
+    case "optaplanner":
+      let optaplanner = state.optaplanner || {};
+      optaplanner[data.key] = data.value;
+      value = {optaplanner};
       break;
     default:
       value[type] = data;
@@ -108,7 +114,10 @@ function App() {
 
       <Game socket={socket} game={state.game} test={"hello"}/>
 
-      <MachineList machines={state.machines}/>
+      <MechanicList socket={socket} optaplanner={state.optaplanner}/>
+
+      <MachineList socket={socket} machines={state.machines}/>
+
       {/*<pre>*/}
         {/*{JSON.stringify(state, null, 2)}*/}
       {/*</pre>*/}

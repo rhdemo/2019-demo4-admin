@@ -4,7 +4,7 @@ import "./MachineList.scss";
 
 function getMachineList(machines) {
   let arr = [];
-  for (var key in machines) {
+  for (let key in machines) {
     let machine = machines[key];
     let intId = machine.id.match(/\d+/g) - 1;
     arr[intId] = machine;
