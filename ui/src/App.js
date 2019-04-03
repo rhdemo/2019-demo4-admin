@@ -56,7 +56,7 @@ function App() {
 
   function connect() {
     return new Sockette(socketUrl, {
-      timeout: 10000,
+      timeout: 2000,
       maxAttempts: 10,
       onopen: onWsOpen,
       onmessage: onWsMessage,
@@ -68,6 +68,7 @@ function App() {
   }
 
   function onWsOpen(event) {
+    console.log("Websocket connected");
     dispatch({
       type: "connection",
       connection: "connected"

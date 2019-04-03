@@ -10,7 +10,7 @@ function getMechanicList(optaplanner) {
   let arr = [];
   for (let key in optaplanner) {
     let value = optaplanner[key];
-    if (!value || value.responseType !== "DISPATCH_MECHANIC") {
+    if (!value || !value.mechanic || (value.responseType !== "DISPATCH_MECHANIC" && value.responseType !== "ADD_MECHANIC")) {
       continue;
     }
     let mechanic = {...value.mechanic};
@@ -31,8 +31,8 @@ function MechanicList({socket, optaplanner}) {
       <table className="table">
         <thead>
         <tr>
-          <th>Index</th>
           <th>Key</th>
+          <th>Index</th>
           <th>Original Machine</th>
           <th>Focus Machine</th>
           <th>Focus Travel</th>
@@ -43,8 +43,8 @@ function MechanicList({socket, optaplanner}) {
         <tbody>
         {mechanicArray.map((mechanic, index) => (
           <tr key={mechanic.mechanicIndex}>
-            <td>{mechanic.mechanicIndex}</td>
             <td>{mechanic.key}</td>
+            <td>{mechanic.mechanicIndex}</td>
             <td>{mechanic.originalMachineIndex}</td>
             <td>{mechanic.focusMachineIndex}</td>
             <td>{mechanic.focusTravelTimeMillis}</td>
