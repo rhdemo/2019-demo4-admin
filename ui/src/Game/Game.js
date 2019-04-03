@@ -60,7 +60,15 @@ function Game({socket, game}) {
     socket.json({type: "reset"});
   }
 
-  let shakeDemo = game.shakeDemo || {enabled: false, multiplier: 5}
+  let shakeDemo = game.shakeDemo || {enabled: false, multiplier: 5};
+  let motions = game.motions || {
+    shake: false,
+    circle: false,
+    x: false,
+    roll: false,
+    fever: false,
+    floss: false,
+  };
 
   return (
     <div className="game">
@@ -104,7 +112,7 @@ function Game({socket, game}) {
                     <input
                       name={motion + "Enabled"}
                       type="checkbox"
-                      checked={game.motions[motion]}
+                      checked={motions[motion]}
                       onChange={() => toggleMotion(motion)}/> {motion}
                   </label>
                 </div>

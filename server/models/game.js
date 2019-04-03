@@ -8,7 +8,8 @@ class Game {
 
     this.shakeDemo = {
       enabled: true,
-      multiplier: 2
+      multiplier: 2,
+      maxPerSecond: 5000
     };
 
     this.motions = {
