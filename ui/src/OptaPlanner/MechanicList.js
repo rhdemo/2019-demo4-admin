@@ -1,6 +1,4 @@
-import React  from "react";
-
-import "./MechanicList.scss";
+import React from "react";
 
 function getMechanicList(optaplanner) {
   if (!optaplanner) {
@@ -19,15 +17,14 @@ function getMechanicList(optaplanner) {
     arr.push(mechanic);
   }
   arr.sort((a, b) => a.mechanicIndex - b.mechanicIndex);
-  return arr
+  return arr;
 }
 
 function MechanicList({socket, optaplanner}) {
   const mechanicArray = getMechanicList(optaplanner);
 
   return (
-    <div className="mechanic-list section">
-      <h1 className="title">Mechanics</h1>
+    <div className="mechanic-list subsection">
       <table className="table">
         <thead>
         <tr>
@@ -47,8 +44,8 @@ function MechanicList({socket, optaplanner}) {
             <td>{mechanic.mechanicIndex}</td>
             <td>{mechanic.originalMachineIndex}</td>
             <td>{mechanic.focusMachineIndex}</td>
-            <td>{mechanic.focusTravelTimeMillis}</td>
-            <td>{mechanic.focusFixTimeMillis}</td>
+            <td>{mechanic.focusTravelDurationMillis}</td>
+            <td>{mechanic.focusFixDurationMillis}</td>
             <td>{mechanic.future}</td>
           </tr>))}
         </tbody>

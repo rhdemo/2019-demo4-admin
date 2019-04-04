@@ -22,6 +22,10 @@ function processSocketMessage(ws, messageStr) {
       resetHandler(ws, messageObj);
       break;
 
+    case INCOMING_MESSAGE_TYPES.OPTAPLANNER:
+      optaplannerHandler(ws, messageObj);
+      break;
+
     default:
       log.warn(`Unhandled Game Message of type "${messageStr}"`);
       break;
@@ -46,5 +50,6 @@ const initHandler = wrapMessageHandler(INCOMING_MESSAGE_TYPES.INIT, require("./i
 const pingHandler = wrapMessageHandler(INCOMING_MESSAGE_TYPES.PING, function (ws, messageObj) {});
 const gameHandler = wrapMessageHandler(INCOMING_MESSAGE_TYPES.GAME, require("./game"));
 const resetHandler = wrapMessageHandler(INCOMING_MESSAGE_TYPES.RESET, require("./reset"));
+const optaplannerHandler = wrapMessageHandler(INCOMING_MESSAGE_TYPES.OPTAPLANNER, require("./optaplanner"));
 
 module.exports = processSocketMessage;

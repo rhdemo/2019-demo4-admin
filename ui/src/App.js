@@ -2,8 +2,9 @@ import React, { useState, useReducer} from "react";
 import Sockette from "sockette";
 
 import Game from "./Game/Game";
-import MechanicList from "./Mechanic/MechanicList";
 import MachineList from "./Machine/MachineList";
+import OptaPlanner from "./OptaPlanner/OptaPlanner";
+
 import "./App.scss";
 
 const initialState = {connection: "disconnected", machines: {}};
@@ -115,9 +116,10 @@ function App() {
 
       <Game socket={socket} game={state.game} test={"hello"}/>
 
-      <MechanicList socket={socket} optaplanner={state.optaplanner}/>
-
       <MachineList socket={socket} machines={state.machines}/>
+
+      <OptaPlanner socket={socket} optaplanner={state.optaplanner}/>
+
 
       {/*<pre>*/}
         {/*{JSON.stringify(state, null, 2)}*/}
