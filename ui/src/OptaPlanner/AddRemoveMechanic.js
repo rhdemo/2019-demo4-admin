@@ -6,11 +6,11 @@ import { faMinus, faPlus, } from "@fortawesome/free-solid-svg-icons";
 function AddRemoveMechanic({socket, optaplanner}) {
 
   function remove() {
-    socket.json({type: "optaplanner", method: "POST", path: "/app/removeMechanic"});
+    socket.json({type: "optaplanner", action: "removeMechanic"});
   }
 
   function add() {
-    socket.json({type: "optaplanner", method: "POST", path: "/app/addMechanic"});
+    socket.json({type: "optaplanner", action: "addMechanic"});
   }
 
   return (

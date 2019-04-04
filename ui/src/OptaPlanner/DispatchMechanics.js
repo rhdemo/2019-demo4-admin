@@ -6,11 +6,11 @@ import { faPause, faPlay, } from "@fortawesome/free-solid-svg-icons";
 function DispatchMechanics({socket, optaplanner}) {
 
   function pause() {
-    socket.json({type: "optaplanner", method: "POST", path: "/app/pauze"});
+    socket.json({type: "optaplanner", action: "pauze"});
   }
 
   function unpause() {
-    socket.json({type: "optaplanner", method: "POST", path: "/app/unpauze"});
+    socket.json({type: "optaplanner", action: "unpauze"});
   }
 
   return (

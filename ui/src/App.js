@@ -58,7 +58,7 @@ function App() {
   function connect() {
     return new Sockette(socketUrl, {
       timeout: 2000,
-      maxAttempts: 10,
+      maxAttempts: 1000,
       onopen: onWsOpen,
       onmessage: onWsMessage,
       onreconnect: onWsOpen,

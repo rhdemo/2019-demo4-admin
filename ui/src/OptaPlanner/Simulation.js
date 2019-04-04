@@ -6,11 +6,11 @@ import { faStop, faPlay, } from "@fortawesome/free-solid-svg-icons";
 function Simulation({socket, optaplanner}) {
 
   function stop() {
-    socket.json({type: "optaplanner", method: "POST", path: "/simulation/stop"});
+    socket.json({type: "optaplanner", action: "stop"});
   }
 
   function start() {
-    socket.json({type: "optaplanner", method: "POST", path: "/simulation/start"});
+    socket.json({type: "optaplanner", action: "start"});
   }
 
   return (
