@@ -25,23 +25,21 @@ function Game({socket, game}) {
   }
 
   return (
-      <form className="enable-motions">
-        <div className="columns">
-          {Object.values(MOTIONS).map(motion => (
-            <div key={motion} className="field column">
-              <div className="control">
-                <label className="checkbox">
-                  <input
-                    name={motion + "Enabled"}
-                    type="checkbox"
-                    checked={game.motions[motion]}
-                    onChange={() => toggleMotion(motion)}/> {motion}
-                </label>
-              </div>
-            </div>
-          ))}
+    <form className="enable-motions">
+      {Object.values(MOTIONS).map(motion => (
+        <div key={motion} className="field">
+          <div className="control">
+            <label className="checkbox">
+              <input
+                name={motion + "Enabled"}
+                type="checkbox"
+                checked={game.motions[motion]}
+                onChange={() => toggleMotion(motion)}/> {motion}
+            </label>
+          </div>
         </div>
-      </form>
+      ))}
+    </form>
   );
 }
 

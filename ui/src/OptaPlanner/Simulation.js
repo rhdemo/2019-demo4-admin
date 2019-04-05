@@ -16,8 +16,7 @@ function Simulation({socket, optaplanner}) {
   return (
     <div className="simulation subsection">
       <h3 className="subtitle">Simulation</h3>
-      <div className="columns">
-        <div className="column">
+      <div className="horizontal-button-container">
           <button
             className="button"
             type="button"
@@ -26,8 +25,6 @@ function Simulation({socket, optaplanner}) {
             }}>
             <FontAwesomeIcon icon={faStop}/> Stop
           </button>
-        </div>
-        <div className="column">
           <button
             className="button"
             type="button"
@@ -36,8 +33,6 @@ function Simulation({socket, optaplanner}) {
             }}>
             <FontAwesomeIcon icon={faPlay}/> Play
           </button>
-        </div>
-
       </div>
     </div>
   );

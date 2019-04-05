@@ -15,29 +15,26 @@ function DispatchMechanics({socket, optaplanner}) {
 
   return (
     <div className="dispatch-mechanics subsection">
-      <h3 className="subtitle">Mechanic Dispatching</h3>
-      <div className="columns">
-        <div className="column">
-          <button
-            className="button"
-            type="button"
-            onClick={() => {
-              pause();
-            }}>
-            <FontAwesomeIcon icon={faPause}/> Pauze
-          </button>
+      <div className="horizontal-button-container">
+        <div>
+          <h3 className="subtitle">Mechanic Dispatching</h3>
         </div>
-        <div className="column">
-          <button
-            className="button"
-            type="button"
-            onClick={() => {
-              unpause();
-            }}>
-            <FontAwesomeIcon icon={faPlay}/> UnPauze
-          </button>
-        </div>
-
+        <button
+          className="button"
+          type="button"
+          onClick={() => {
+            pause();
+          }}>
+          <FontAwesomeIcon icon={faPause}/> Pauze
+        </button>
+        <button
+          className="button"
+          type="button"
+          onClick={() => {
+            unpause();
+          }}>
+          <FontAwesomeIcon icon={faPlay}/> UnPauze
+        </button>
       </div>
     </div>
   );

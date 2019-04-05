@@ -1,5 +1,7 @@
 import React, { useState, useReducer} from "react";
 import Sockette from "sockette";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 import Game from "./Game/Game";
 import MachineList from "./Machine/MachineList";
@@ -7,7 +9,7 @@ import OptaPlanner from "./OptaPlanner/OptaPlanner";
 
 import "./App.scss";
 
-const initialState = {connection: "disconnected", machines: {}};
+const initialState = {loading: true, connection: "disconnected", machines: {}};
 
 
 function reducer(state, action) {
@@ -46,7 +48,7 @@ function processMessage(state, message) {
       value[type] = data;
       break;
   }
-  return {...state, ...value};
+  return {...state, ...value, loading: false};
 }
 
 function App() {
@@ -95,8 +97,8 @@ function App() {
     });
   }
 
-  return (
-    <div className="app">
+  function renderConnectionBar() {
+    return (
       <nav className="level">
         <div className="level-left">
           <div className="level-item has-text-centered">
@@ -112,14 +114,39 @@ function App() {
             </div>
           </div>
         </div>
-      </nav>
+      </nav>);
+  }
 
-      <Game socket={socket} game={state.game} test={"hello"}/>
+  function renderMain() {
+    if (state.loading) {
+      return (
+        <div>
+          <h1 className="title"><FontAwesomeIcon icon={faSpinner} spin={true}/> Loading...</h1>
+        </div>
+      );
+    }
 
-      <MachineList socket={socket} machines={state.machines}/>
+    return (
+      <div>
+        <Game socket={socket} game={state.game} test={"hello"}/>
+        <div className="columns is-desktop">
+          <div className="column">
+            <MachineList socket={socket} machines={state.machines}/>
+          </div>
+          <div className="column">
+            <OptaPlanner socket={socket} optaplanner={state.optaplanner}/>
+          </div>
+        </div>
 
-      <OptaPlanner socket={socket} optaplanner={state.optaplanner}/>
+      </div>
+    )
+  }
 
+  return (
+    <div className="app">
+      {renderConnectionBar()}
+
+      {renderMain()}
 
       {/*<pre>*/}
         {/*{JSON.stringify(state, null, 2)}*/}

@@ -16,16 +16,16 @@ function Game({socket, game}) {
     return (
       <section className="section">
         <h1 className="title">Game Configuration Not Found: Reset</h1>
-          <div className="columns">
-            <button
-              className="button"
-              type="button"
-              onClick={() => {
-                resetGame();
-              }}>
-              <FontAwesomeIcon icon={faUndo}/> Reset
-            </button>
-          </div>
+        <div className="horizontal-button-container">
+          <button
+            className="button"
+            type="button"
+            onClick={() => {
+              resetGame();
+            }}>
+            <FontAwesomeIcon icon={faUndo}/> Reset
+          </button>
+        </div>
       </section>
     );
   }

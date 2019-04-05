@@ -10,7 +10,9 @@ const OPTAPLANNER_ACTIONS = {
   pauze: {method: "POST", path: "/app/pauze"},
   unpauze: {method: "POST", path: "/app/unpauze"},
   stop: {method: "POST", path: "/simulation/stop"},
-  start: {method: "POST", path: "/simulation/start"}
+  start: {method: "POST", path: "/simulation/start"},
+  damage: {method: "POST", path: "/simulation/damage"},
+  heal: {method: "POST", path: "/simulation/heal"}
 };
 
 async function optaplannerHandler(ws, messageObj) {
@@ -22,7 +24,7 @@ async function optaplannerHandler(ws, messageObj) {
   }
 
   try {
-   let r = await axios({
+   await axios({
       method: method || "POST",
       url: new URL(path, OPTAPLANNER_URL).href,
       data: messageObj.data
