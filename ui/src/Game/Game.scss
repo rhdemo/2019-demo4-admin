@@ -1,6 +1,12 @@
 .game {
   margin-bottom: 2rem;
 
+  .shake-demo {
+    input.input {
+      max-width: 10rem;
+    }
+  }
+
   .enable-motions {
     .field {
       display: inline-block;

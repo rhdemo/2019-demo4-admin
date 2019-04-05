@@ -33,7 +33,7 @@ function ShakeDemo({socket, game}) {
   }
 
   return (
-      <section className="section">
+      <section className="shake-demo section">
         <h1 className="title">Scaling Test</h1>
         <form className="enable-scaling">
           <div className="field">
