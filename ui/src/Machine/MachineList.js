@@ -39,8 +39,8 @@ function getMachineList(machines) {
 function MachineList({socket, machines}) {
   function damageMachine(machine, damagePercent) {
     const machineIndex = machine.optaplannerId;
-    const damage = damagePercent / 100;
-    socket.json({type: "optaplanner", action: "damage", data: {machineIndex, damage}});
+    const amount = damagePercent / 100;
+    socket.json({type: "optaplanner", action: "damage", data: {machineIndex, amount}});
   }
 
   function healMachine(machine) {
