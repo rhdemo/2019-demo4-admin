@@ -41,18 +41,16 @@ class Game {
       floss: 100,
     };
 
-    this.damagePercent =  {
-      "machine-1": 100,
-      "machine-2": 100,
-      "machine-3": 100,
-      "machine-4": 100,
-      "machine-5": 100,
-      "machine-6": 100,
-      "machine-7": 100,
-      "machine-8": 100,
-      "machine-9": 100,
-      "machine-10": 100
-    }
+    this.damage = {
+      shake: 0.002,
+      circle: 0.01,
+      x: 0.01,
+      roll: 0.02,
+      fever: 0.02,
+      floss: 0.10,
+    };
+
+    this.damageMultiplier =  1
   }
 }
 

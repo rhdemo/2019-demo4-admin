@@ -24,14 +24,13 @@ function getMachineList(machines) {
   for (let key in machines) {
     const machine = {...machines[key]};
     const machineId = parseInt(machine.id.match(/\d+/g)[0]);
-    const arrayIndex = machineId - 1;
 
     machine.intId = machineId;
-    machine.optaplannerId = arrayIndex;
+    machine.optaplannerId = machineId;
     machine.health = ((machine.value / MAX_HEALTH) * 100).toFixed(2) + "%";
-    machine.label = MACHINE_VIZ[arrayIndex].label;
-    machine.style = MACHINE_VIZ[arrayIndex].style;
-    arr[arrayIndex] = machine;
+    machine.label = MACHINE_VIZ[machineId].label;
+    machine.style = MACHINE_VIZ[machineId].style;
+    arr[machineId] = machine;
   }
   return arr;
 }
@@ -64,16 +63,16 @@ function MachineList({socket, machines}) {
       <table className="table">
         <thead>
         <tr>
-          {/*<th>Key</th>*/}
+          <th></th>
           <th>Label</th>
           <th>Health</th>
           <th>Actions</th>
         </tr>
         </thead>
         <tbody>
-        {machineArr.map((machine) => (
+        {machineArr.map((machine, index) => (
           <tr key={machine.id}>
-            {/*<td>{machine.id}</td>*/}
+            <td>{index}</td>
             <td>
               <div className="machine-label" style={machine.style}>{machine.label}</div>
             </td>
