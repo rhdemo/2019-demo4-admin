@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUndo } from "@fortawesome/free-solid-svg-icons";
 
 import "./Game.scss";
+import AI from "./AI";
 import ShakeDemo from "./ShakeDemo";
 import Motions from "./Motions";
 import State from "./State";
@@ -53,6 +54,7 @@ function Game({socket, game}) {
       <section className="section">
         <div className="gameplay">
           <h1 className="title">Game: {getState()}</h1>
+          <AI socket={socket} game={game}/>
           <Motions socket={socket} game={game}/>
           <State socket={socket} game={game}/>
         </div>

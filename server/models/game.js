@@ -21,16 +21,7 @@ class Game {
       floss: false,
     };
 
-    this.ai = {
-      minProbability: {
-        shake: 0.8,
-        circle: 0.8,
-        x: 0.8,
-        roll: 0.8,
-        fever: 0.8,
-        floss: 0.8,
-      }
-    };
+    this.bypassAI = false;
 
     this.scoring = {
       shake: 1,

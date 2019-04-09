@@ -1,12 +1,17 @@
 .game {
   margin-bottom: 2rem;
 
-  .title .notification {
-    padding: 0.5rem;
+  .title {
+    margin-bottom: 2rem;
+    .notification {
+      padding: 0.5rem;
+    }
   }
 
   form {
     padding-right: 4rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
 
   .enable-motions {
