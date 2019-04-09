@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStop, faPlay, } from "@fortawesome/free-solid-svg-icons";
 
 
-function Simulation({socket, optaplanner}) {
+function Simulation({socket, optaplanner, optaplannerConfig}) {
 
   function stop() {
     socket.json({type: "optaplanner", action: "stop"});
@@ -13,9 +13,21 @@ function Simulation({socket, optaplanner}) {
     socket.json({type: "optaplanner", action: "start"});
   }
 
+  function getStatus() {
+    if (!optaplannerConfig) {
+      return <span className="tag is-medium is-warning">???</span>;
+    }
+
+    if (optaplannerConfig.simulationActive) {
+      return <span className="tag is-medium is-success">Started</span>;
+    } else {
+      return <span className="tag is-medium">Stopped</span>;
+    }
+  }
+
   return (
     <div className="simulation subsection">
-      <h3 className="subtitle">Simulation</h3>
+      <h3 className="subtitle">Simulation: {getStatus()}</h3>
       <div className="horizontal-button-container">
           <button
             className="button"
@@ -31,7 +43,7 @@ function Simulation({socket, optaplanner}) {
             onClick={() => {
               start();
             }}>
-            <FontAwesomeIcon icon={faPlay}/> Play
+            <FontAwesomeIcon icon={faPlay}/> Start
           </button>
       </div>
     </div>

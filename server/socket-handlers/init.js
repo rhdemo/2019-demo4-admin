@@ -10,6 +10,8 @@ async function initHandler(ws, messageObj) {
     ws.send(JSON.stringify({type: OUTGOING_MESSAGE_TYPES.MACHINE, data: {id, value}, action: "modify"}));
   }
 
+
+  ws.send(JSON.stringify({type: OUTGOING_MESSAGE_TYPES.OPT_CONFIG, data: global.optaPlannerConfig, action: "modify"}));
   sendOptEvents(ws);
 }
 

@@ -1,9 +1,9 @@
-const log = require("../utils/log")("datagrid");
+const log = require("../utils/log")("datagrid/init-game");
 const {DATAGRID_KEYS} = require("./constants");
 const Game = require("../models/game");
 
 async function initGame() {
-    let gameStr = await global.dataClient.get("game");
+    let gameStr = await global.dataClient.get(DATAGRID_KEYS.GAME);
 
     if (gameStr) {
         global.game = JSON.parse(gameStr);

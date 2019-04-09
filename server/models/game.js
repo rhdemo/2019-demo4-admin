@@ -9,7 +9,7 @@ class Game {
     this.shakeDemo = {
       enabled: true,
       multiplier: 2,
-      maxPerSecond: 5000
+      maxPerSecond: 1000
     };
 
     this.motions = {

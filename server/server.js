@@ -19,6 +19,8 @@ global.game = {
 
 global.machines = machines;
 
+global.optaPlannerConfig = {};
+
 global.socketServer = new WebSocket.Server({
   host: IP,
   port: PORT

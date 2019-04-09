@@ -1,7 +1,7 @@
 const infinispan = require("infinispan");
 const env = require("env-var");
 
-const log = require("../utils/log")("planner");
+const log = require("../utils/log")("datagrid/init-planner");
 const optEventHandler = require("./opt-event");
 
 const DATAGRID_HOST = env.get("DATAGRID_HOST").asString();

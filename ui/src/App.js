@@ -9,7 +9,7 @@ import OptaPlanner from "./OptaPlanner/OptaPlanner";
 
 import "./App.scss";
 
-const initialState = {loading: true, connection: "disconnected", machines: {}};
+const initialState = {loading: true, connection: "loading", machines: {}};
 
 
 function reducer(state, action) {
@@ -60,12 +60,11 @@ function App() {
   function connect() {
     return new Sockette(socketUrl, {
       timeout: 2000,
-      maxAttempts: 1000,
       onopen: onWsOpen,
       onmessage: onWsMessage,
       onreconnect: onWsOpen,
       onmaximum: onWsMaximum,
-      onclose: e => console.log("Closed!", e),
+      onclose: onWsClosed,
       onerror: e => console.error("Error:", e)
     });
   }
@@ -90,16 +89,23 @@ function App() {
     });
   }
 
+  function onWsClosed(event) {
+    dispatch({
+      type: "connection",
+      connection: "disconnected"
+    });
+  }
+
   function onWsMaximum(event) {
     dispatch({
       type: "connection",
-      connection: "connection lost"
+      connection: "lost"
     });
   }
 
   function renderConnectionBar() {
     return (
-      <nav className="level">
+      <nav className={"connection-status level " + state.connection}>
         <div className="level-left">
           <div className="level-item has-text-centered">
             <div>
@@ -134,7 +140,7 @@ function App() {
             <MachineList socket={socket} machines={state.machines}/>
           </div>
           <div className="column">
-            <OptaPlanner socket={socket} optaplanner={state.optaplanner}/>
+            <OptaPlanner socket={socket} optaplanner={state.optaplanner} optaplannerConfig={state.optaplannerConfig}/>
           </div>
         </div>
 

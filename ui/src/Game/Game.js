@@ -6,10 +6,27 @@ import "./Game.scss";
 import ShakeDemo from "./ShakeDemo";
 import Motions from "./Motions";
 import State from "./State";
+import Scoring from "./Scoring";
+import Damage from "./Damage";
 
 function Game({socket, game}) {
   function resetGame() {
     socket.json({type: "reset"});
+  }
+
+  function getState() {
+    switch (game.state) {
+      case "lobby":
+        return <span className="notification">Lobby</span>;
+      case "stopped":
+        return <span className="notification is-danger">Stopped</span>;
+      case "paused":
+        return <span className="notification is-warning">Paused</span>;
+      case "active":
+        return <span className="notification is-success">Active</span>;
+      default:
+        return <span className="notification is-black">{game.state}</span>
+    }
   }
 
   if (!game) {
@@ -34,9 +51,19 @@ function Game({socket, game}) {
     <div className="game">
       <ShakeDemo socket={socket} game={game}/>
       <section className="section">
-        <h1 className="title">Game: {game.state}</h1>
-        <Motions socket={socket} game={game}/>
-        <State socket={socket} game={game}/>
+        <div className="gameplay">
+          <h1 className="title">Game: {getState()}</h1>
+          <Motions socket={socket} game={game}/>
+          <State socket={socket} game={game}/>
+        </div>
+        <div className="columns settings">
+          <div className="column setting is-half-tablet is-one-third-desktop">
+            <Scoring socket={socket} game={game}/>
+          </div>
+          <div className="column setting is-half-tablet is-one-third-desktop">
+            <Damage socket={socket} game={game}/>
+          </div>
+        </div>
       </section>
     </div>
   );

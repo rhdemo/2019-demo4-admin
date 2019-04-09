@@ -1,6 +1,7 @@
+const {DATAGRID_KEYS} = require("./constants");
 
 async function readGame() {
-    let gameStr = await global.dataClient.get("game");
+    let gameStr = await global.dataClient.get(DATAGRID_KEYS.GAME);
     if (gameStr) {
         global.game = JSON.parse(gameStr);
     }

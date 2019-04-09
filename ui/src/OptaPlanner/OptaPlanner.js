@@ -1,18 +1,20 @@
 import React from "react";
 
-import MechanicList from "./MechanicList";
-import Simulation from "./Simulation";
+import Solver from "./Solver";
 import DispatchMechanics from "./DispatchMechanics";
+import Simulation from "./Simulation";
 import AddRemoveMechanic from "./AddRemoveMechanic";
+import MechanicList from "./MechanicList";
 
 import "./OptaPlanner.scss";
 
-function OptaPlanner({socket, optaplanner}) {
+function OptaPlanner({socket, optaplanner, optaplannerConfig}) {
   return (
     <div className="optaplanner section">
       <h1 className="title">OptaPlanner</h1>
-      <DispatchMechanics socket={socket} optaplanner={optaplanner}/>
-      <Simulation socket={socket} optaplanner={optaplanner}/>
+      <Solver socket={socket} optaplanner={optaplanner}/>
+      <DispatchMechanics socket={socket} optaplanner={optaplanner} optaplannerConfig={optaplannerConfig}/>
+      <Simulation socket={socket} optaplanner={optaplanner}  optaplannerConfig={optaplannerConfig}/>
       <AddRemoveMechanic socket={socket} optaplanner={optaplanner}/>
       <MechanicList socket={socket} optaplanner={optaplanner}/>
     </div>

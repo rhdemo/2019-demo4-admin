@@ -34,42 +34,46 @@ function ShakeDemo({socket, game}) {
 
   return (
       <section className="shake-demo section">
-        <h1 className="title">Scaling Test</h1>
-        <form className="enable-scaling">
-          <div className="field">
-            <div className="control">
-              <label className="checkbox">
-                <input
-                  name="scalingEnabled"
-                  type="checkbox"
-                  checked={game.shakeDemo.enabled}
-                  onChange={toggleShakeDemo}/> Enable Shake Demo
-              </label>
-            </div>
+        <div className="columns">
+          <div className="column is-half-tablet is-one-third-desktop">
+            <h1 className="title">Scaling Test</h1>
+            <form className="enable-scaling">
+              <div className="field">
+                <div className="control">
+                  <label className="checkbox">
+                    <input
+                      name="scalingEnabled"
+                      type="checkbox"
+                      checked={game.shakeDemo.enabled}
+                      onChange={toggleShakeDemo}/> Enable Shake Demo
+                  </label>
+                </div>
+              </div>
+              <div className="field">
+                <label className="label">Message Multiplier</label>
+                <div className="field">
+                  <input
+                    className="input"
+                    type="number"
+                    value={game.shakeDemo.multiplier}
+                    onChange={updateMultiplier}
+                  />
+                </div>
+              </div>
+              <div className="field">
+                <label className="label">Message Maximum</label>
+                <div className="field">
+                  <input
+                    className="input"
+                    type="number"
+                    value={game.shakeDemo.maxPerSecond}
+                    onChange={updateMax}
+                  />
+                </div>
+              </div>
+            </form>
           </div>
-          <div className="field">
-            <label className="label">Message Multiplier</label>
-            <div className="field">
-              <input
-                className="input"
-                type="number"
-                value={game.shakeDemo.multiplier}
-                onChange={updateMultiplier}
-              />
-            </div>
-          </div>
-          <div className="field">
-            <label className="label">Message Maximum</label>
-            <div className="field">
-              <input
-                className="input"
-                type="number"
-                value={game.shakeDemo.maxPerSecond}
-                onChange={updateMax}
-              />
-            </div>
-          </div>
-        </form>
+        </div>
       </section>
   );
 }
