@@ -5,10 +5,11 @@ const log = require("../utils/log")("socket-handlers/optaplanner");
 const OPTAPLANNER_URL = env.get("OPTAPLANNER_URL").asString();
 
 const OPTAPLANNER_ACTIONS = {
+  reset: {method: "POST", path: "/app/reset"},
   removeMechanic: {method: "POST", path: "/app/removeMechanic"},
   addMechanic: {method: "POST", path: "/app/addMechanic"},
-  pauze: {method: "POST", path: "/app/pauze"},
-  unpauze: {method: "POST", path: "/app/unpauze"},
+  pauze: {method: "POST", path: "/app/pauzeDispatch"},
+  unpauze: {method: "POST", path: "/app/unpauzeDispatch"},
   stop: {method: "POST", path: "/simulation/stop"},
   start: {method: "POST", path: "/simulation/start"},
   damage: {method: "POST", path: "/simulation/damage"},
