@@ -52,7 +52,7 @@ function MachineList({socket, machines}) {
         <tr>
           <th></th>
           <th>Label</th>
-          <th>Health</th>
+          <th className="health-column">Health</th>
           <th>Actions</th>
         </tr>
         </thead>

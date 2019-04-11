@@ -1,5 +1,9 @@
 .machine-list {
 
+  th.health-column {
+    min-width: 6em;
+  }
+
   td .machine-label {
     border-radius: 4px;
     text-align: center;
