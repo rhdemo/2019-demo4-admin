@@ -13,7 +13,7 @@ function Damage({socket, game}) {
 
 
   function updateMultiplier(event) {
-    const damageMultiplier = parseInt(event.target.value);
+    const damageMultiplier = parseFloat(event.target.value);
     if (isNaN(damageMultiplier)) {
       return;
     }

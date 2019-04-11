@@ -1,23 +1,26 @@
 import React from "react";
+import getMachineViz from "../common/getMachineViz"
 
 function getMechanicList(optaplanner) {
   if (!optaplanner) {
     return [];
   }
 
-  let arr = [];
+  let mechanics = [];
   for (let key in optaplanner) {
     let value = optaplanner[key];
-    if (!value || !value.mechanic || (value.responseType !== "DISPATCH_MECHANIC" && value.responseType !== "ADD_MECHANIC")) {
-      continue;
+    if (value && value.mechanic && (value.responseType === "DISPATCH_MECHANIC" || value.responseType === "ADD_MECHANIC")) {
+      let mechanic = {...value.mechanic};
+      let future = optaplanner[`${key}-futureIndexes`];
+      if (future && future.futureMachineIndexes) {
+        mechanic.futureMachineIndexes = future.futureMachineIndexes.map(f => getMachineViz(f).label).join(", ");
+      }
+
+      mechanics.push(mechanic);
     }
-    let mechanic = {...value.mechanic};
-    mechanic.key = key;
-    mechanic.future = JSON.stringify(mechanic.futureMachineIndexes);
-    arr.push(mechanic);
   }
-  arr.sort((a, b) => a.mechanicIndex - b.mechanicIndex);
-  return arr;
+  mechanics.sort((a, b) => a.mechanicIndex - b.mechanicIndex);
+  return mechanics
 }
 
 function MechanicList({socket, optaplanner}) {
@@ -28,26 +31,25 @@ function MechanicList({socket, optaplanner}) {
       <table className="table">
         <thead>
         <tr>
-          <th>Key</th>
           <th>Index</th>
-          <th>Original Machine</th>
-          <th>Focus Machine</th>
-          <th>Focus Travel</th>
-          <th>Focus Fix Time</th>
+          <th>Original</th>
+          <th>Focus</th>
+          <th>Travel</th>
+          <th>Fix Time</th>
           <th>Future</th>
         </tr>
         </thead>
         <tbody>
         {mechanicArray.map((mechanic, index) => (
           <tr key={mechanic.mechanicIndex}>
-            <td>{mechanic.key}</td>
             <td>{mechanic.mechanicIndex}</td>
-            <td>{mechanic.originalMachineIndex}</td>
-            <td>{mechanic.focusMachineIndex}</td>
+            <td>{getMachineViz(mechanic.originalMachineIndex).label}</td>
+            <td>{getMachineViz(mechanic.focusMachineIndex).label}</td>
             <td>{mechanic.focusTravelDurationMillis}</td>
             <td>{mechanic.focusFixDurationMillis}</td>
-            <td>{mechanic.future}</td>
-          </tr>))}
+            <td>{mechanic.futureMachineIndexes}</td>
+          </tr>)
+        )}
         </tbody>
       </table>
     </div>

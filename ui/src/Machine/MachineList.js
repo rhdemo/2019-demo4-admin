@@ -1,23 +1,10 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
-
+import getMachineViz from "../common/getMachineViz"
 import "./MachineList.scss";
 
 const MAX_HEALTH = 1000000000000000000;
-
-const MACHINE_VIZ = [
-  {label: "A", style: {color: "#363636", backgroundColor: "#F4F256"}},
-  {label: "B", style: {color: "#363636", backgroundColor: "#67F34F"}},
-  {label: "C", style: {color: "white", backgroundColor: "#8835CB"}},
-  {label: "D", style: {color: "white", backgroundColor: "#E549E0"}},
-  {label: "E", style: {color: "white", backgroundColor: "#404D4E"}},
-  {label: "F", style: {color: "white", backgroundColor: "#FB2F35"}},
-  {label: "G", style: {color: "white", backgroundColor: "#32BBE5"}},
-  {label: "H", style: {color: "white", backgroundColor: "#32DDD9"}},
-  {label: "I", style: {color: "white", backgroundColor: "#E67B49"}},
-  {label: "J", style: {color: "white", backgroundColor: "#E55353"}}
-];
 
 function getMachineList(machines) {
   let arr = [];
@@ -28,8 +15,8 @@ function getMachineList(machines) {
     machine.intId = machineId;
     machine.optaplannerId = machineId;
     machine.health = ((machine.value / MAX_HEALTH) * 100).toFixed(2) + "%";
-    machine.label = MACHINE_VIZ[machineId].label;
-    machine.style = MACHINE_VIZ[machineId].style;
+    machine.label = getMachineViz(machineId).label;
+    machine.style = getMachineViz(machineId).style;
     arr[machineId] = machine;
   }
   return arr;
