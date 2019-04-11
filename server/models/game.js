@@ -23,6 +23,15 @@ class Game {
 
     this.bypassAI = false;
 
+    this.ai = {
+      shake: .90,
+      circle: .90,
+      x: .90,
+      roll: .90,
+      fever: .90,
+      floss: .90,
+    };
+
     this.scoring = {
       shake: 1,
       circle: 5,

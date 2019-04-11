@@ -26,7 +26,7 @@ function Game({socket, game}) {
       case "active":
         return <span className="notification is-success">Active</span>;
       default:
-        return <span className="notification is-black">{game.state}</span>
+        return <span className="notification is-black">{game.state || "???????"}</span>
     }
   }
 
@@ -54,15 +54,17 @@ function Game({socket, game}) {
       <section className="section">
         <div className="gameplay">
           <h1 className="title">Game: {getState()}</h1>
-          <AI socket={socket} game={game}/>
           <Motions socket={socket} game={game}/>
           <State socket={socket} game={game}/>
         </div>
         <div className="columns settings">
-          <div className="column setting is-half-tablet is-one-third-desktop">
+          <div className="column setting is-one-third-tablet">
+            <AI socket={socket} game={game}/>
+          </div>          
+          <div className="column setting is-one-third-tablet">
             <Scoring socket={socket} game={game}/>
           </div>
-          <div className="column setting is-half-tablet is-one-third-desktop">
+          <div className="column setting is-one-third-tablet">
             <Damage socket={socket} game={game}/>
           </div>
         </div>

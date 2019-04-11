@@ -14,9 +14,11 @@ function Scoring({socket, game}) {
 
   if (!game || !game.scoring) {
     return (
-      <section className="section">
+      <div className="scoring">
         <h1 className="title">Scoring Not Found</h1>
-      </section>);
+        <h3 className="subtitle">Reset Game</h3>
+      </div>
+    );
   }
 
   return (

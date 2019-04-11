@@ -24,9 +24,11 @@ function Damage({socket, game}) {
 
   if (!game || !game.damage) {
     return (
-      <section className="section">
+      <div className="damage">
         <h1 className="title">Damage Not Found</h1>
-      </section>);
+        <h3 className="subtitle">Reset Game</h3>
+      </div>
+    );
   }
 
   return (

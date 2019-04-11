@@ -6,20 +6,60 @@ function AI({socket, game}) {
     socket.json({type: "game", game: {...game, bypassAI}});
   }
 
-  return (
-    <form className="ai-settings">
-      <div className="field">
-        <div className="control">
-          <label className="checkbox">
-            <input
-              name="scalingEnabled"
-              type="checkbox"
-              checked={game.bypassAI}
-              onChange={toggleAI}/> Bypass AI Services
-          </label>
-        </div>
+  function update(motion, event) {
+    const probability = parseFloat(event.target.value);
+    if (isNaN(probability)) {
+      return;
+    }
+    let ai = {...game.ai};
+    ai[motion] = probability;
+    socket.json({type: "game", game: {...game, ai}});
+  }
+
+
+  if (!game || !game.ai) {
+    return (
+      <div className="ai-settings">
+        <h1 className="title">AI Not Found</h1>
+        <h3 className="subtitle">Reset Game</h3>
       </div>
-    </form>
+    );
+  }
+
+  return (
+    <div className="ai-settings">
+      <h1 className="title">AI Min</h1>
+      <form className="ai-inputs">
+        {Object.entries(game.ai).map(([motion, probability]) => (
+          <div key={motion} className="field">
+            <label className="label">{motion}</label>
+            <div className="field">
+              <div className="control">
+                <input
+                  className="input"
+                  type="number"
+                  value={probability}
+                  onChange={(e) => update(motion, e)}
+                />
+              </div>
+            </div>
+          </div>
+        ))}
+      </form>
+      <form className="ai-bypass-inputs">
+        <div className="field">
+          <div className="control">
+            <label className="checkbox">
+              <input
+                name="scalingEnabled"
+                type="checkbox"
+                checked={game.bypassAI}
+                onChange={toggleAI}/> Bypass AI
+            </label>
+          </div>
+        </div>
+      </form>
+    </div>
   );
 }
 
