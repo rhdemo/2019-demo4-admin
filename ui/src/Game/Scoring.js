@@ -8,7 +8,7 @@ function Scoring({socket, game}) {
     }
     let scoring = {...game.scoring};
     scoring[motion] = score;
-    socket.json({type: "game", game: {...game, scoring}});
+    socket.json({type: "game", game: {scoring}});
   }
 
 

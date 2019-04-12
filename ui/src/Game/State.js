@@ -14,7 +14,7 @@ const GAME_STATES = {
 function State({socket, game}) {
 
   function updateGameState(gameState) {
-    socket.json({type: "game", game: {...game, state: gameState}});
+    socket.json({type: "game", game: {state: gameState}});
   }
 
   function resetGame() {

@@ -8,7 +8,7 @@ function Damage({socket, game}) {
     }
     let damage = {...game.damage};
     damage[motion] = amount;
-    socket.json({type: "game", game: {...game, damage}});
+    socket.json({type: "game", game: {damage}});
   }
 
 
@@ -17,7 +17,7 @@ function Damage({socket, game}) {
     if (isNaN(damageMultiplier)) {
       return;
     }
-    socket.json({type: "game", game: {...game, damageMultiplier}});
+    socket.json({type: "game", game: {damageMultiplier}});
   }
 
 

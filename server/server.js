@@ -43,5 +43,5 @@ initData()
       });
     });
     pollMachines(500);
-    pollMachines(10000, true);
+    setTimeout(() => pollMachines(10000, true), 250);
   });

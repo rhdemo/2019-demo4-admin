@@ -3,7 +3,7 @@ import React from "react";
 function AI({socket, game}) {
   function toggleAI() {
     const bypassAI = !game.bypassAI;
-    socket.json({type: "game", game: {...game, bypassAI}});
+    socket.json({type: "game", game: {bypassAI}});
   }
 
   function update(motion, event) {
@@ -13,7 +13,7 @@ function AI({socket, game}) {
     }
     let ai = {...game.ai};
     ai[motion] = probability;
-    socket.json({type: "game", game: {...game, ai}});
+    socket.json({type: "game", game: {ai}});
   }
 
 

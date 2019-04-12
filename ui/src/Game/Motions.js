@@ -13,7 +13,7 @@ function Game({socket, game}) {
   function toggleMotion(motion) {
     const motions = {...game.motions};
     motions[motion] = !motions[motion];
-    socket.json({type: "game", game: {...game, motions: motions}});
+    socket.json({type: "game", game: {motions}});
   }
 
   if (!game || !game.motions) {

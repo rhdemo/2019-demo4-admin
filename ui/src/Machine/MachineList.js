@@ -7,20 +7,47 @@ import "./MachineList.scss";
 const MAX_HEALTH = 1000000000000000000;
 
 function getMachineList(machines) {
-  let arr = [];
+  let machineList = [];
+  let minMachine = {label: "???", health: 101};
+  let healthSum = 0;
+  let numMachines = 0;
+
   for (let key in machines) {
     const machine = {...machines[key]};
     const machineId = parseInt(machine.id.match(/\d+/g)[0]);
 
     machine.intId = machineId;
     machine.optaplannerId = machineId;
-    machine.health = ((machine.value / MAX_HEALTH) * 100).toFixed(2) + "%";
+    machine.health = ((machine.value / MAX_HEALTH) * 100);
     machine.label = getMachineViz(machineId).label;
     machine.style = getMachineViz(machineId).style;
-    arr[machineId] = machine;
+    machineList[machineId] = machine;
+
+    healthSum += machine.health;
+    numMachines += 1;
+
+    if (machine.health < minMachine.health) {
+      minMachine = machine;
+    }
   }
-  return arr;
+
+  const averageHealth = numMachines ? healthSum / numMachines : NaN;
+
+  return {machineList, minMachine, averageHealth};
 }
+
+function getDamageClass(machine) {
+  if (machine.health < 50) {
+    return "broken"
+  }
+
+  if (machine.health < 80) {
+    return "damaged";
+  }
+
+  return "healthy";
+}
+
 
 function MachineList({socket, machines}) {
   function damageMachine(machine, damagePercent) {
@@ -42,12 +69,16 @@ function MachineList({socket, machines}) {
     );
   }
 
-  const machineArr = getMachineList(machines);
+  const {machineList, minMachine, averageHealth} = getMachineList(machines);
 
   return (
     <div className="machine-list section">
       <h1 className="title">Machines</h1>
-      <table className="table">
+      <div className="machine-stats">
+        <h3>Min Health: {minMachine.health.toFixed(2)}% ({minMachine.label})</h3>
+        <h3>Avg Health: {averageHealth.toFixed(2)}%</h3>
+      </div>
+      <table className="table machine-list-table">
         <thead>
         <tr>
           <th></th>
@@ -57,13 +88,13 @@ function MachineList({socket, machines}) {
         </tr>
         </thead>
         <tbody>
-        {machineArr.map((machine, index) => (
-          <tr key={machine.id}>
+        {machineList.map((machine, index) => (
+          <tr key={machine.id} className={machine.id === minMachine.id ? "is-highlighted": ""}>
             <td>{index}</td>
-            <td>
+            <td className="machine-stats">
               <div className="machine-label" style={machine.style}>{machine.label}</div>
             </td>
-            <td>{machine.health}</td>
+            <td className={getDamageClass(machine)}>{machine.health.toFixed(2)}%</td>
             <td>
               <button
                 className="button"

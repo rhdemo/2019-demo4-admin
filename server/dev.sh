@@ -1,20 +1,20 @@
 #!/bin/bash
 
 
-MINISHIFT_IP=$(minishift ip)
+MINISHIFT_IP=$(minishift ip 2 > /dev/null)
 
 if [[ -z "${MINISHIFT_IP}" ]]
 then
     CONSOLE_HOST=console-datagrid-demo.apps.dev.openshift.redhatkeynote.com
     OPTAPLANNER_URL=http://optaplanner-demo-optaplanner-demo.apps.dev.openshift.redhatkeynote.com
     echo "No minishift instance."
-    echo "sing ${CONSOLE_HOST}"
+    echo "Using ${CONSOLE_HOST}"
     echo "Using ${OPTAPLANNER_URL}"
 else
     CONSOLE_HOST=console-datagrid-demo.${MINISHIFT_IP}.nip.io
     OPTAPLANNER_URL=http://optaplanner-demo-optaplanner-demo.${MINISHIFT_IP}.nip.io
     echo "Using minishift instance at ${MINISHIFT_IP}"
-    echo "sing ${CONSOLE_HOST}"
+    echo "Using ${CONSOLE_HOST}"
     echo "Using ${OPTAPLANNER_URL}"
 fi
 

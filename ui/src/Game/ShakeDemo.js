@@ -4,7 +4,7 @@ function ShakeDemo({socket, game}) {
   function toggleShakeDemo() {
     const enabled = !game.shakeDemo.enabled;
     let shakeDemo = {...game.shakeDemo, enabled};
-    socket.json({type: "game", game: {...game, shakeDemo}});
+    socket.json({type: "game", game: {shakeDemo}});
   }
 
   function updateMultiplier(event) {
@@ -13,7 +13,7 @@ function ShakeDemo({socket, game}) {
       return;
     }
     let shakeDemo = {...game.shakeDemo, multiplier};
-    socket.json({type: "game", game: {...game, shakeDemo}});
+    socket.json({type: "game", game: {shakeDemo}});
   }
 
   function updateMax(event) {
@@ -22,7 +22,7 @@ function ShakeDemo({socket, game}) {
       return;
     }
     let shakeDemo = {...game.shakeDemo, maxPerSecond};
-    socket.json({type: "game", game: {...game, shakeDemo}});
+    socket.json({type: "game", game: {shakeDemo}});
   }
 
   if (!game || !game.shakeDemo) {
