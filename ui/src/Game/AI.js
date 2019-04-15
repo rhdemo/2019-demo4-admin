@@ -33,15 +33,13 @@ function AI({socket, game}) {
         {Object.entries(game.ai).map(([motion, probability]) => (
           <div key={motion} className="field">
             <label className="label">{motion}</label>
-            <div className="field">
-              <div className="control">
-                <input
-                  className="input"
-                  type="number"
-                  value={probability}
-                  onChange={(e) => update(motion, e)}
-                />
-              </div>
+            <div className="control">
+              <input
+                className="input"
+                type="number"
+                value={probability}
+                onChange={(e) => update(motion, e)}
+              />
             </div>
           </div>
         ))}

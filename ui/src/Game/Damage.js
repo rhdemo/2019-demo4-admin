@@ -38,29 +38,25 @@ function Damage({socket, game}) {
           {Object.entries(game.damage).map(([motion, damage]) => (
             <div key={motion} className="field">
               <label className="label">{motion}</label>
-              <div className="field">
-                <div className="control">
-                  <input
-                    className="input"
-                    type="number"
-                    value={damage}
-                    onChange={(e) => updateDamage(motion, e)}
-                  />
-                </div>
+              <div className="control">
+                <input
+                  className="input"
+                  type="number"
+                  value={damage}
+                  onChange={(e) => updateDamage(motion, e)}
+                />
               </div>
             </div>
           ))}
           <div className="field">
             <label className="label">Damage Multiplier</label>
-            <div className="field">
-              <div className="control">
-                <input
-                  className="input"
-                  type="number"
-                  value={game.damageMultiplier}
-                  onChange={(e) => updateMultiplier(e)}
-                />
-              </div>
+            <div className="control">
+              <input
+                className="input"
+                type="number"
+                value={game.damageMultiplier}
+                onChange={(e) => updateMultiplier(e)}
+              />
             </div>
           </div>
         </form>

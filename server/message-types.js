@@ -12,6 +12,7 @@ module.exports.OUTGOING_MESSAGE_TYPES = {
   GAME: "game",
   PING: "ping",
   MACHINE: "machine",
+  OPT_OPTIONS: "optaplannerOptions",
   OPT_CONFIG: "optaplannerConfig",
   OPT_EVENT: "optaplanner"
 };

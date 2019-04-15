@@ -1,6 +1,8 @@
+const axios = require("axios");
+const env = require("env-var");
 const log = require("../utils/log")("socket-handlers/init");
-
 const {OUTGOING_MESSAGE_TYPES} = require("../message-types");
+const OPTAPLANNER_URL = env.get("OPTAPLANNER_URL").asString();
 
 async function initHandler(ws, messageObj) {
   ws.send(JSON.stringify({type: OUTGOING_MESSAGE_TYPES.GAME, data: global.game, action: "modify"}));
@@ -13,6 +15,7 @@ async function initHandler(ws, messageObj) {
 
   ws.send(JSON.stringify({type: OUTGOING_MESSAGE_TYPES.OPT_CONFIG, data: global.optaPlannerConfig, action: "modify"}));
   sendOptEvents(ws);
+  sendOptOptions(ws);
 }
 
 async function sendOptEvents(ws) {
@@ -28,6 +31,18 @@ async function sendOptEvents(ws) {
     }
 
   } while (!entry.done);
+}
+
+async function sendOptOptions(ws) {
+  try {
+    let simulationDamageTypes = await axios({
+      method: "GET",
+      url: new URL("/simulation/damageDistributionTypes", OPTAPLANNER_URL).href
+    });
+    ws.send(JSON.stringify({type: OUTGOING_MESSAGE_TYPES.OPT_OPTIONS, data: {simulationDamageTypes}}));
+  } catch (error) {
+    log.error("error occurred in http call to optaplanner API: ", error.message);
+  }
 }
 
 module.exports = initHandler;

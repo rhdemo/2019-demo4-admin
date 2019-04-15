@@ -2,7 +2,7 @@ const log = require("../utils/log")("datagrid/init-game");
 const {DATAGRID_KEYS} = require("./constants");
 const Game = require("../models/game");
 
-async function initGame() {
+async function createGame() {
     let gameStr = await global.dataClient.get(DATAGRID_KEYS.GAME);
 
     if (gameStr) {
@@ -17,5 +17,5 @@ async function initGame() {
 }
 
 
-module.exports = initGame;
+module.exports = createGame;
 

@@ -31,7 +31,7 @@ async function optaplannerHandler(ws, messageObj) {
       data: messageObj.data
     });
   } catch (error) {
-    log.error("error occured in http call to prediction API: ", error.message);
+    log.error("error occured in http call to optaplanner API: ", error.message);
   }
 }
 

@@ -9,8 +9,18 @@ import OptaPlanner from "./OptaPlanner/OptaPlanner";
 
 import "./App.scss";
 
-const initialState = {loading: true, connection: "loading", machines: {}};
-
+const initialState = {
+  loading: true,
+  connection: "loading",
+  machines: {},
+  optaplannerOptions: {
+    simulationDamageTypes: [
+      "UNIFORM",
+      "GAUSS",
+      "DOUBLE_DISTRIBUTION_ON_MACHINE_D_AND_I"
+    ]
+  }
+};
 
 function reducer(state, action) {
   switch (action.type) {
@@ -48,7 +58,7 @@ function processMessage(state, message) {
       value[type] = data;
       break;
   }
-  return {...state, ...value, loading: false};
+  return {...state, ...value, loading: false, connection: "connected"};
 }
 
 function App() {
@@ -73,7 +83,7 @@ function App() {
     console.log("Websocket connected");
     dispatch({
       type: "connection",
-      connection: "connected"
+      connection: "connecting"
     });
 
     socket.json({
@@ -140,7 +150,10 @@ function App() {
             <MachineList socket={socket} machines={state.machines}/>
           </div>
           <div className="column">
-            <OptaPlanner socket={socket} optaplanner={state.optaplanner} optaplannerConfig={state.optaplannerConfig}/>
+            <OptaPlanner socket={socket}
+                         optaplanner={state.optaplanner}
+                         optaplannerConfig={state.optaplannerConfig}
+                         optaplannerOptions={state.optaplannerOptions}/>
           </div>
         </div>
 

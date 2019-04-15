@@ -28,15 +28,13 @@ function Scoring({socket, game}) {
           {Object.entries(game.scoring).map(([motion, score]) => (
             <div key={motion} className="field">
               <label className="label">{motion}</label>
-              <div className="field">
-                <div className="control">
-                  <input
-                    className="input"
-                    type="number"
-                    value={score}
-                    onChange={(e) => update(motion, e)}
-                  />
-                </div>
+              <div className="control">
+                <input
+                  className="input"
+                  type="number"
+                  value={score}
+                  onChange={(e) => update(motion, e)}
+                />
               </div>
             </div>
           ))}
