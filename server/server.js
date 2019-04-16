@@ -8,6 +8,7 @@ const machines = require("./models/machines");
 const initData = require("./datagrid/init-data");
 const pollMachines = require("./datagrid/poll-machines");
 const initPlanner = require("./datagrid/init-planner");
+const initPlayers = require("./datagrid/init-players");
 
 const PORT = env.get("PORT", "8080").asIntPositive();
 const IP = process.env.IP || process.env.OPENSHIFT_NODEJS_IP || "0.0.0.0";
@@ -36,6 +37,7 @@ setInterval(function () {
 
 initData()
   .then(() => initPlanner())
+  .then(() => initPlayers())
   .then(client => {
     global.socketServer.on("connection", function connection(ws) {
       ws.on("message", function incoming(message) {
