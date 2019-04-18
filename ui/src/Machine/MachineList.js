@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUndo, faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import getMachineViz from "../common/getMachineViz"
 import "./MachineList.scss";
 
@@ -77,21 +77,20 @@ function MachineList({socket, machines}) {
 
   return (
     <div className="machine-list section">
-      <div className="title-button-container">
-        <h1 className="title">Machines</h1>
-        <button
-          className="button"
-          type="button"
-          onClick={() => {
-            reset();
-          }}>
-          <FontAwesomeIcon icon={faUndo}/>
-        </button>
-      </div>
+      <h1 className="title">Machines</h1>
       <div className="machine-stats">
         <h3>Min Health: {minMachine.health.toFixed(2)}% ({minMachine.label})</h3>
         <h3>Avg Health: {averageHealth.toFixed(2)}%</h3>
       </div>
+      <div className="machine-heal-all">
+        <button
+          className="button is-success"
+          type="button"
+          onClick={() => {
+            reset();
+          }}><FontAwesomeIcon icon={faHeart}/> Heal All</button>
+      </div>
+
       <table className="table machine-list-table">
         <thead>
         <tr>
