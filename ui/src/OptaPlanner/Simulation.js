@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import classNames from 'classnames';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStop, faPlay, } from "@fortawesome/free-solid-svg-icons";
+import { faStop, faPlay, faCog} from "@fortawesome/free-solid-svg-icons";
 
 
 function Simulation({socket, optaplanner, optaplannerConfig, optaplannerOptions}) {
@@ -18,11 +19,11 @@ function Simulation({socket, optaplanner, optaplannerConfig, optaplannerOptions}
 
   function getStatus() {
     if (!optaplannerConfig) {
-      return <span className="tag is-medium is-warning">???</span>;
+      return <span className="tag is-medium is-danger">???</span>;
     }
 
     if (optaplannerConfig.simulationActive) {
-      return <span className="tag is-medium is-success">Started</span>;
+      return <span className="tag is-medium is-warning"><FontAwesomeIcon icon={faCog} spin={true}/> Running</span>;
     } else {
       return <span className="tag is-medium">Stopped</span>;
     }
@@ -34,18 +35,17 @@ function Simulation({socket, optaplanner, optaplannerConfig, optaplannerOptions}
       <form className="simulation-inputs">
         <div className="field">
           <label className="label">DPS</label>
-          <div className="field">
-            <div className="control">
-              <input
-                className="input simulation-dps-input"
-                type="number"
-                value={totalDamagePerSecond}
-                onChange={(e) => setTotalDamagePerSecond(e.target.value)}
-              />
-            </div>
+          <div className="control">
+            <input
+              className="input simulation-dps-input"
+              type="number"
+              value={totalDamagePerSecond}
+              onChange={(e) => setTotalDamagePerSecond(e.target.value)}
+            />
           </div>
         </div>
         <div className="field">
+          <label className="label">Distribution</label>
           <div className="control">
             <div className="select">
               <select value={damageDistributionType} onChange={(e) => setDamageDistributionType(e.target.value)}>
@@ -60,7 +60,7 @@ function Simulation({socket, optaplanner, optaplannerConfig, optaplannerOptions}
       </form>
       <div className="horizontal-button-container">
           <button
-            className="button"
+            className={classNames('button', {"is-danger": optaplannerConfig && optaplannerConfig.simulationActive})}
             type="button"
             onClick={() => {
               stop();
@@ -68,7 +68,7 @@ function Simulation({socket, optaplanner, optaplannerConfig, optaplannerOptions}
             <FontAwesomeIcon icon={faStop}/> Stop
           </button>
           <button
-            className="button"
+            className={classNames('button', {"is-info": optaplannerConfig && !optaplannerConfig.simulationActive})}
             type="button"
             onClick={() => {
               start();

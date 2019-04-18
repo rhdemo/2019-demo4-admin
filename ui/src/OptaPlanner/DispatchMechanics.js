@@ -1,6 +1,7 @@
 import React from "react";
+import classNames from 'classnames';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPause, faPlay, } from "@fortawesome/free-solid-svg-icons";
+import { faPause, faPlay, faCog} from "@fortawesome/free-solid-svg-icons";
 
 
 function DispatchMechanics({socket, optaplanner, optaplannerConfig}) {
@@ -15,11 +16,11 @@ function DispatchMechanics({socket, optaplanner, optaplannerConfig}) {
 
   function getStatus() {
     if (!optaplannerConfig) {
-      return <span className="tag is-medium is-warning">???</span>;
+      return <span className="tag is-medium is-danger">???</span>;
     }
 
     if (optaplannerConfig.dispatchActive) {
-      return <span className="tag is-medium is-success">Active</span>;
+      return <span className="tag is-medium is-warning"><FontAwesomeIcon icon={faCog} spin={true}/> Active</span>;
     } else {
       return <span className="tag is-medium">Pauzed</span>;
     }
@@ -32,7 +33,7 @@ function DispatchMechanics({socket, optaplanner, optaplannerConfig}) {
           <h3 className="subtitle">Mechanic Dispatching: {getStatus()}</h3>
         </div>
         <button
-          className="button"
+          className={classNames('button', {"is-danger": optaplannerConfig && optaplannerConfig.dispatchActive})}
           type="button"
           onClick={() => {
             pause();
@@ -40,7 +41,7 @@ function DispatchMechanics({socket, optaplanner, optaplannerConfig}) {
           <FontAwesomeIcon icon={faPause}/> Pauze
         </button>
         <button
-          className="button"
+          className={classNames('button', {"is-info": optaplannerConfig && !optaplannerConfig.dispatchActive})}
           type="button"
           onClick={() => {
             unpause();
