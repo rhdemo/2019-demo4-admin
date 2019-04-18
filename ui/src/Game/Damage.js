@@ -1,6 +1,12 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUndo } from "@fortawesome/free-solid-svg-icons";
 
 function Damage({socket, game}) {
+  function reset() {
+    socket.json({type: "reset-damage"});
+  }
+
   function updateDamage(motion, event) {
     const amount = parseFloat(event.target.value);
     if (isNaN(amount)) {
@@ -27,13 +33,31 @@ function Damage({socket, game}) {
       <div className="damage">
         <h1 className="title">Damage Not Found</h1>
         <h3 className="subtitle">Reset Game</h3>
+        <button
+          className="button"
+          type="button"
+          onClick={() => {
+            reset();
+          }}>
+          <FontAwesomeIcon icon={faUndo}/>
+        </button>
       </div>
     );
   }
 
   return (
       <div className="damage">
-        <h1 className="title">Damage</h1>
+        <div className="title-button-container">
+          <h1 className="title">Damage</h1>
+          <button
+            className="button"
+            type="button"
+            onClick={() => {
+              reset();
+            }}>
+            <FontAwesomeIcon icon={faUndo}/>
+          </button>
+        </div>
         <form className="damage-inputs">
           {Object.entries(game.damage).map(([motion, damage]) => (
             <div key={motion} className="field">

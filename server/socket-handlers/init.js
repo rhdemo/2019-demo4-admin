@@ -35,10 +35,11 @@ async function sendOptEvents(ws) {
 
 async function sendOptOptions(ws) {
   try {
-    let simulationDamageTypes = await axios({
+    let response = await axios({
       method: "GET",
       url: new URL("/simulation/damageDistributionTypes", OPTAPLANNER_URL).href
     });
+    let simulationDamageTypes = response.data;
     ws.send(JSON.stringify({type: OUTGOING_MESSAGE_TYPES.OPT_OPTIONS, data: {simulationDamageTypes}}));
   } catch (error) {
     log.error("error occurred in http call to optaplanner API: ", error.message);

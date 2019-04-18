@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faUndo, faHeart } from "@fortawesome/free-solid-svg-icons";
 import getMachineViz from "../common/getMachineViz"
 import "./MachineList.scss";
 
@@ -50,6 +50,10 @@ function getDamageClass(machine) {
 
 
 function MachineList({socket, machines}) {
+  function reset() {
+    socket.json({type: "reset-machines"});
+  }
+
   function damageMachine(machine, damagePercent) {
     const machineIndex = machine.optaplannerId;
     const amount = damagePercent / 100;
@@ -73,7 +77,17 @@ function MachineList({socket, machines}) {
 
   return (
     <div className="machine-list section">
-      <h1 className="title">Machines</h1>
+      <div className="title-button-container">
+        <h1 className="title">Machines</h1>
+        <button
+          className="button"
+          type="button"
+          onClick={() => {
+            reset();
+          }}>
+          <FontAwesomeIcon icon={faUndo}/>
+        </button>
+      </div>
       <div className="machine-stats">
         <h3>Min Health: {minMachine.health.toFixed(2)}% ({minMachine.label})</h3>
         <h3>Avg Health: {averageHealth.toFixed(2)}%</h3>

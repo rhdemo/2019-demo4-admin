@@ -18,7 +18,7 @@ function State({socket, game}) {
   }
 
   function resetGame() {
-    socket.json({type: "reset"});
+    socket.json({type: "reset-game"});
   }
 
   if (!game) {

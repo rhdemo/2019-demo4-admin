@@ -5,8 +5,8 @@ import { faStop, faPlay, } from "@fortawesome/free-solid-svg-icons";
 
 function Simulation({socket, optaplanner, optaplannerConfig, optaplannerOptions}) {
   const damageOptions = optaplannerOptions ? optaplannerOptions.simulationDamageTypes : ["ERROR"];
-  const [totalDamagePerSecond, setTotalDamagePerSecond] = useState(0.2);
-  const [damageDistributionType, setDamageDistributionType] = useState(damageOptions[0]);
+  const [totalDamagePerSecond, setTotalDamagePerSecond] = useState(0.16);
+  const [damageDistributionType, setDamageDistributionType] = useState("GAUSS");
 
   function stop() {
     socket.json({type: "optaplanner", action: "stop"});

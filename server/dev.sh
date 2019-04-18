@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-MINISHIFT_IP=$(minishift ip 2 > /dev/null)
+MINISHIFT_IP=$(minishift ip 2>/dev/null)
 
 if [[ -z "${MINISHIFT_IP}" ]]
 then

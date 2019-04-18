@@ -1,8 +1,9 @@
 import React, { useState, useReducer} from "react";
 import Sockette from "sockette";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faUndo, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
+import ShakeDemo from "./ShakeDemo/ShakeDemo";
 import Game from "./Game/Game";
 import MachineList from "./Machine/MachineList";
 import OptaPlanner from "./OptaPlanner/OptaPlanner";
@@ -113,6 +114,10 @@ function App() {
     });
   }
 
+  function resetAll() {
+    socket.json({type: "reset"});
+  }
+
   function renderConnectionBar() {
     return (
       <nav className={"connection-status level " + state.connection}>
@@ -144,7 +149,20 @@ function App() {
 
     return (
       <div>
-        <Game socket={socket} game={state.game} test={"hello"}/>
+        <section className="section">
+          <h1 className="title">Admin Console</h1>
+          <button
+            className="button is-danger"
+            type="button"
+            onClick={() => {
+              resetAll();
+            }}>
+            <FontAwesomeIcon icon={faUndo}/> Reset All
+          </button>
+        </section>
+
+        <ShakeDemo socket={socket} game={state.game}/>
+        <Game socket={socket} game={state.game}/>
         <div className="columns is-desktop">
           <div className="column">
             <MachineList socket={socket} machines={state.machines}/>

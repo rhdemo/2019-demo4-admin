@@ -1,6 +1,12 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUndo } from "@fortawesome/free-solid-svg-icons";
 
 function ShakeDemo({socket, game}) {
+  function reset() {
+    socket.json({type: "reset-shake-demo"});
+  }
+
   function toggleShakeDemo() {
     const enabled = !game.shakeDemo.enabled;
     let shakeDemo = {...game.shakeDemo, enabled};
@@ -36,7 +42,17 @@ function ShakeDemo({socket, game}) {
       <section className="shake-demo section">
         <div className="columns">
           <div className="column is-half-tablet is-one-third-desktop">
-            <h1 className="title">Scaling Test</h1>
+            <div className="title-button-container">
+              <h1 className="title">Scaling Test</h1>
+              <button
+                className="button"
+                type="button"
+                onClick={() => {
+                  reset();
+                }}>
+                <FontAwesomeIcon icon={faUndo}/>
+              </button>
+            </div>
             <form className="enable-scaling">
               <div className="field">
                 <div className="control">

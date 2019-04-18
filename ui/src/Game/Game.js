@@ -4,7 +4,6 @@ import { faUndo } from "@fortawesome/free-solid-svg-icons";
 
 import "./Game.scss";
 import AI from "./AI";
-import ShakeDemo from "./ShakeDemo";
 import Motions from "./Motions";
 import State from "./State";
 import Scoring from "./Scoring";
@@ -12,7 +11,7 @@ import Damage from "./Damage";
 
 function Game({socket, game}) {
   function resetGame() {
-    socket.json({type: "reset"});
+    socket.json({type: "reset-game"});
   }
 
   function getState() {
@@ -33,7 +32,7 @@ function Game({socket, game}) {
   if (!game) {
     return (
       <section className="section">
-        <h1 className="title">Game Configuration Not Found: Reset</h1>
+        <h1 className="title">Game Configuration Not Found: Reset Required</h1>
         <div className="horizontal-button-container">
           <button
             className="button"
@@ -50,7 +49,6 @@ function Game({socket, game}) {
 
   return (
     <div className="game">
-      <ShakeDemo socket={socket} game={game}/>
       <section className="section">
         <div className="gameplay">
           <h1 className="title">Game: {getState()}</h1>
