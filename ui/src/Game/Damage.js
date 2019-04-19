@@ -32,7 +32,7 @@ function Damage({socket, game}) {
     return (
       <div className="damage">
         <h1 className="title">Damage Not Found</h1>
-        <h3 className="subtitle">Reset Game</h3>
+        <h3 className="subtitle">Reset</h3>
         <button
           className="button"
           type="button"
@@ -47,17 +47,7 @@ function Damage({socket, game}) {
 
   return (
       <div className="damage">
-        <div className="title-button-container">
-          <h1 className="title">Damage</h1>
-          <button
-            className="button"
-            type="button"
-            onClick={() => {
-              reset();
-            }}>
-            <FontAwesomeIcon icon={faUndo}/>
-          </button>
-        </div>
+        <h3 className="subtitle">Damage</h3>
         <form className="damage-inputs">
           {Object.entries(game.damage).map(([motion, damage]) => (
             <div key={motion} className="field">
@@ -84,6 +74,14 @@ function Damage({socket, game}) {
             </div>
           </div>
         </form>
+        <button
+          className="button"
+          type="button"
+          onClick={() => {
+            reset();
+          }}>
+          <FontAwesomeIcon icon={faUndo}/> Reset
+        </button>
       </div>
   );
 }

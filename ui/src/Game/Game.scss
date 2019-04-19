@@ -1,19 +1,6 @@
 .game {
   margin-bottom: 2rem;
 
-  .title {
-    margin-bottom: 2rem;
-    .notification {
-      padding: 0.5rem;
-    }
-  }
-
-  form {
-    padding-right: 4rem;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-  }
-
   .enable-motions {
     .field {
       display: inline-block;
@@ -24,10 +11,20 @@
   }
 
   .gameplay {
-    margin-bottom: 2rem;
+    margin-bottom: 4rem;
+  }
+
+  .game-state {
+    margin-bottom: 1rem;
   }
 
   .setting {
     margin-bottom: 2rem;
+  }
+
+  .game-settings {
+    form {
+      margin-bottom: 2rem;
+    }
   }
 }

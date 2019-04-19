@@ -76,7 +76,7 @@ function MachineList({socket, machines}) {
   const {machineList, minMachine, averageHealth} = getMachineList(machines);
 
   return (
-    <div className="machine-list section">
+    <div className="machine-list">
       <h1 className="title">Machines</h1>
       <div className="machine-stats">
         <h3>Min Health: {minMachine.health.toFixed(2)}% ({minMachine.label})</h3>

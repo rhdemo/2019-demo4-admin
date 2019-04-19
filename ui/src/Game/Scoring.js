@@ -37,17 +37,7 @@ function Scoring({socket, game}) {
 
   return (
       <div className="scoring">
-        <div className="title-button-container">
-          <h1 className="title">Scoring</h1>
-          <button
-            className="button"
-            type="button"
-            onClick={() => {
-              reset();
-            }}>
-            <FontAwesomeIcon icon={faUndo}/>
-          </button>
-        </div>
+        <h3 className="subtitle">Scoring</h3>
         <form className="scoring-inputs">
           {Object.entries(game.scoring).map(([motion, score]) => (
             <div key={motion} className="field">
@@ -63,6 +53,14 @@ function Scoring({socket, game}) {
             </div>
           ))}
         </form>
+        <button
+          className="button"
+          type="button"
+          onClick={() => {
+            reset();
+          }}>
+          <FontAwesomeIcon icon={faUndo}/> Reset
+        </button>
       </div>
   );
 }

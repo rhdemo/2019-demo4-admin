@@ -1,7 +1,8 @@
 import React, { useState, useReducer} from "react";
 import Sockette from "sockette";
+import classNames from 'classnames';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUndo, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 import ShakeDemo from "./ShakeDemo/ShakeDemo";
 import Game from "./Game/Game";
@@ -14,6 +15,7 @@ const initialState = {
   loading: true,
   connection: "loading",
   machines: {},
+  stats: {},
   optaplannerOptions: {
     simulationDamageTypes: [
       "UNIFORM",
@@ -62,11 +64,19 @@ function processMessage(state, message) {
   return {...state, ...value, loading: false, connection: "connected"};
 }
 
+const NAV_CHOICES = {
+  SHAKE: "shake",
+  OPTAPLANNER: "optaplanner",
+  GAME: "game",
+  DEBUG: "debug"
+};
+
 function App() {
   const socketUrl = `ws://${window.location.host}/admin-socket`;
 
   const [socket] = useState(connect);
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [navSelection, updateNavSelection] = useState(NAV_CHOICES.SHAKE);
 
   function connect() {
     return new Sockette(socketUrl, {
@@ -114,10 +124,6 @@ function App() {
     });
   }
 
-  function resetAll() {
-    socket.json({type: "reset"});
-  }
-
   function renderConnectionBar() {
     return (
       <nav className={"connection-status level " + state.connection}>
@@ -138,6 +144,31 @@ function App() {
       </nav>);
   }
 
+  function renderNavbar() {
+    return (
+      <nav className="navbar" role="navigation" aria-label="main navigation">
+        <div className="navbar-brand">
+          <a className={classNames("navbar-item", {"is-active": navSelection === NAV_CHOICES.SHAKE})}
+             onClick={() => updateNavSelection(NAV_CHOICES.SHAKE)}>
+            Shake
+          </a>
+          <a className={classNames("navbar-item", {"is-active": navSelection === NAV_CHOICES.OPTAPLANNER})}
+             onClick={() => updateNavSelection(NAV_CHOICES.OPTAPLANNER)}>
+            OptaPlanner
+          </a>
+          <a className={classNames("navbar-item", {"is-active": navSelection === NAV_CHOICES.GAME})}
+             onClick={() => updateNavSelection(NAV_CHOICES.GAME)}>
+            Game
+          </a>
+          <a className={classNames("navbar-item", {"is-active": navSelection === NAV_CHOICES.DEBUG})}
+             onClick={() => updateNavSelection(NAV_CHOICES.DEBUG)}>
+            Debug
+          </a>
+        </div>
+      </nav>
+    )
+  }
+
   function renderMain() {
     if (state.loading) {
       return (
@@ -147,45 +178,64 @@ function App() {
       );
     }
 
-    return (
-      <div>
-        <section className="section">
-          <h1 className="title">Admin Console</h1>
-          <button
-            className="button is-danger"
-            type="button"
-            onClick={() => {
-              resetAll();
-            }}>
-            <FontAwesomeIcon icon={faUndo}/> Reset All
-          </button>
-        </section>
 
-        <ShakeDemo socket={socket} game={state.game}/>
-        <Game socket={socket} game={state.game}/>
-        <div className="columns is-desktop">
+    if (navSelection === NAV_CHOICES.SHAKE) {
+      return (
+        <section className="section">
+          <ShakeDemo socket={socket} game={state.game}/>
+        </section>
+      );
+    }
+
+    if ((navSelection === NAV_CHOICES.OPTAPLANNER) ) {
+      return (
+        <section className="section">
+          <div className="columns is-desktop">
+            <div className="column">
+              <OptaPlanner socket={socket}
+                           game={state.game}
+                           stats={state.stats}
+                           optaplanner={state.optaplanner}
+                           optaplannerConfig={state.optaplannerConfig}
+                           optaplannerOptions={state.optaplannerOptions}/>
+            </div>
+            <div className="column">
+              <MachineList socket={socket} machines={state.machines}/>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    if ((navSelection === NAV_CHOICES.DEBUG)) {
+      return (
+        <section className="section">
+          <pre>
+            {JSON.stringify(state, null, 2)}
+          </pre>
+        </section>
+      );
+    }
+
+    return (
+      <section className="section">
+        <div className="columns is-8 is-desktop">
+          <div className="column">
+            <Game socket={socket} game={state.game} stats={state.stats}/>
+          </div>
           <div className="column">
             <MachineList socket={socket} machines={state.machines}/>
           </div>
-          <div className="column">
-            <OptaPlanner socket={socket}
-                         optaplanner={state.optaplanner}
-                         optaplannerConfig={state.optaplannerConfig}
-                         optaplannerOptions={state.optaplannerOptions}/>
-          </div>
         </div>
-
-      </div>
-    )
+      </section>
+    );
   }
 
   return (
     <div className="app">
       {renderConnectionBar()}
+      {renderNavbar()}
       {renderMain()}
-      {/*<pre>*/}
-        {/*{JSON.stringify(state, null, 2)}*/}
-      {/*</pre>*/}
     </div>
   );
 }

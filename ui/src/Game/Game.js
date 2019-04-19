@@ -1,32 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
+import classNames from 'classnames';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUndo } from "@fortawesome/free-solid-svg-icons";
 
 import "./Game.scss";
+import GameStatus from "../common/GameStatus";
 import AI from "./AI";
 import Motions from "./Motions";
 import State from "./State";
 import Scoring from "./Scoring";
 import Damage from "./Damage";
 
-function Game({socket, game}) {
+
+const TAB_CHOICES = {
+  DAMAGE: "damage",
+  SCORING: "scoring",
+  AI: "ai"
+};
+
+
+function Game({socket, game, stats}) {
+  const [tab, updateTab] = useState(TAB_CHOICES.DAMAGE);
+
   function resetGame() {
     socket.json({type: "reset-game"});
   }
 
-  function getState() {
-    switch (game.state) {
-      case "lobby":
-        return <span className="notification">Lobby</span>;
-      case "stopped":
-        return <span className="notification is-danger">Stopped</span>;
-      case "paused":
-        return <span className="notification is-warning">Paused</span>;
-      case "active":
-        return <span className="notification is-success">Active</span>;
-      default:
-        return <span className="notification is-black">{game.state || "???????"}</span>
+  function resetAll() {
+    socket.json({type: "reset"});
+  }
+
+  function renderSettings() {
+    if (tab === TAB_CHOICES.AI) {
+      return <AI socket={socket} game={game}/>;
     }
+
+    if (tab === TAB_CHOICES.SCORING) {
+      return <Scoring socket={socket} game={game}/>;
+    }
+
+    return <Damage socket={socket} game={game}/>;
   }
 
   if (!game) {
@@ -49,24 +62,38 @@ function Game({socket, game}) {
 
   return (
     <div className="game">
-      <section className="section">
-        <div className="gameplay">
-          <h1 className="title">Game: {getState()}</h1>
-          <Motions socket={socket} game={game}/>
-          <State socket={socket} game={game}/>
+      <div className="gameplay is-half-tablet">
+        <GameStatus game={game} stats={stats}/>
+        <Motions socket={socket} game={game}/>
+        <State socket={socket} game={game}/>
+        <button
+          className="button is-danger"
+          type="button"
+          onClick={() => {
+            resetAll();
+          }}>
+          <FontAwesomeIcon icon={faUndo}/> Reset All
+        </button>
+      </div>
+      <div>
+        <h1 className="title">Settings</h1>
+        <div className="tabs is-boxed">
+          <ul>
+            <li className={classNames({"is-active": tab === TAB_CHOICES.DAMAGE})}>
+              <a onClick={() => updateTab(TAB_CHOICES.DAMAGE)}>Damage</a>
+            </li>
+            <li className={classNames({"is-active": tab === TAB_CHOICES.SCORING})}>
+              <a onClick={() => updateTab(TAB_CHOICES.SCORING)}>Scoring</a>
+            </li>
+            <li className={classNames({"is-active": tab === TAB_CHOICES.AI})}>
+              <a onClick={() => updateTab(TAB_CHOICES.AI)}>AI</a>
+            </li>
+          </ul>
         </div>
-        <div className="columns settings">
-          <div className="column setting is-one-third-tablet">
-            <AI socket={socket} game={game}/>
-          </div>          
-          <div className="column setting is-one-third-tablet">
-            <Scoring socket={socket} game={game}/>
-          </div>
-          <div className="column setting is-one-third-tablet">
-            <Damage socket={socket} game={game}/>
-          </div>
+        <div className="game-settings">
+          {renderSettings()}
         </div>
-      </section>
+      </div>
     </div>
   );
 }

@@ -42,17 +42,7 @@ function AI({socket, game}) {
 
   return (
     <div className="ai-settings">
-      <div className="title-button-container">
-        <h1 className="title">AI Min</h1>
-        <button
-          className="button"
-          type="button"
-          onClick={() => {
-            reset();
-          }}>
-          <FontAwesomeIcon icon={faUndo}/>
-        </button>
-      </div>
+      <h3 className="subtitle">AI</h3>
       <form className="ai-inputs">
         {Object.entries(game.ai).map(([motion, probability]) => (
           <div key={motion} className="field">
@@ -81,6 +71,14 @@ function AI({socket, game}) {
           </div>
         </div>
       </form>
+      <button
+        className="button"
+        type="button"
+        onClick={() => {
+          reset();
+        }}>
+        <FontAwesomeIcon icon={faUndo}/> Reset
+      </button>
     </div>
   );
 }

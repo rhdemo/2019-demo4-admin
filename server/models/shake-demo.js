@@ -1,5 +1,5 @@
 module.exports = {
   enabled: true,
   multiplier: 2,
-  maxPerSecond: 1000
+  maxPerSecond: 5000
 };
