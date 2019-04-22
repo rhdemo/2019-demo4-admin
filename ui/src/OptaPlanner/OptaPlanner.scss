@@ -6,4 +6,26 @@
   .simulation-dps-input {
     max-width: 435px;
   }
+
+  .mechanics {
+    .horizontal-button-container {
+      .button {
+        margin-top: 0;
+      }
+    }
+    .mechanic-list {
+      min-height: 12rem;
+
+      .no-mechanics {
+        text-align: center;
+        vertical-align: middle;
+        height: 120px;
+        background-color: #F5F5F5;
+        font-size: 1.2rem;
+        font-weight: 500;
+      }
+    }
+  }
+
+
 }

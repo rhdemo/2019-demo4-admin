@@ -26,6 +26,32 @@ function getMechanicList(optaplanner) {
 function MechanicList({socket, optaplanner}) {
   const mechanicArray = getMechanicList(optaplanner);
 
+  if (!mechanicArray || mechanicArray.length === 0) {
+    return (
+      <div className="mechanic-list subsection">
+        <table className="table">
+          <thead>
+          <tr>
+            <th>Index</th>
+            <th>Original</th>
+            <th>Focus</th>
+            <th>Travel</th>
+            <th>Fix Time</th>
+            <th>Future</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td colSpan={6} className="no-mechanics">
+                No Mechanics
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+
   return (
     <div className="mechanic-list subsection">
       <table className="table">

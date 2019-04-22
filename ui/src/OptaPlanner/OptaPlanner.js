@@ -5,8 +5,7 @@ import State from "../Game/State";
 import Solver from "./Solver";
 import DispatchMechanics from "./DispatchMechanics";
 import Simulation from "./Simulation";
-import AddRemoveMechanic from "./AddRemoveMechanic";
-import MechanicList from "./MechanicList";
+import Mechanics from "./Mechanics";
 
 import "./OptaPlanner.scss";
 
@@ -20,9 +19,8 @@ function OptaPlanner({socket, game, stats, optaplanner, optaplannerConfig, optap
       <h1 className="title">OptaPlanner</h1>
       <Solver socket={socket} optaplanner={optaplanner}/>
       <DispatchMechanics socket={socket} optaplanner={optaplanner} optaplannerConfig={optaplannerConfig}/>
+      <Mechanics socket={socket} optaplanner={optaplanner}/>
       <Simulation socket={socket} optaplanner={optaplanner}  optaplannerConfig={optaplannerConfig} optaplannerOptions={optaplannerOptions}/>
-      <AddRemoveMechanic socket={socket} optaplanner={optaplanner}/>
-      <MechanicList socket={socket} optaplanner={optaplanner}/>
     </div>
   );
 }

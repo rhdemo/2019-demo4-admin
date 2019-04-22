@@ -1,9 +1,10 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus, } from "@fortawesome/free-solid-svg-icons";
+import MechanicList from "./MechanicList";
 
 
-function AddRemoveMechanic({socket, optaplanner}) {
+function Mechanics({socket, optaplanner}) {
 
   function remove() {
     socket.json({type: "optaplanner", action: "removeMechanic"});
@@ -14,7 +15,7 @@ function AddRemoveMechanic({socket, optaplanner}) {
   }
 
   return (
-    <div className="add-remove-mechanic subsection">
+    <div className="mechanics subsection">
       <h3 className="subtitle">Mechanics</h3>
       <div className="horizontal-button-container">
         <button
@@ -34,8 +35,9 @@ function AddRemoveMechanic({socket, optaplanner}) {
           <FontAwesomeIcon icon={faPlus}/> Add
         </button>
       </div>
+      <MechanicList socket={socket} optaplanner={optaplanner}/>
     </div>
   );
 }
 
-export default AddRemoveMechanic;
+export default Mechanics;
