@@ -20,6 +20,10 @@ global.game = {
 
 global.machines = machines;
 
+global.leaderboard = {
+  players: []
+};
+
 global.optaPlannerConfig = {};
 
 global.playerStats = {};

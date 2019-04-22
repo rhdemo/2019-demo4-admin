@@ -25,5 +25,6 @@ async function readAll(options) {
 
 (async function () {
   await readAll();
+  await readAll({cacheName: "players"});
   readAll({cacheName: "DispatchEvents"});
 })();

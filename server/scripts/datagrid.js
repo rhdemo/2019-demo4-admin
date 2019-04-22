@@ -48,20 +48,22 @@ async function clear(clientOptions) {
 (async function () {
 
   // const data = {
-  //   key: "OptaPlannerConfig",
+  //   key: "game",
   //   value: {
   //     dispatchActive: false,
   //     simulationActive: false
   //   }
   // };
 
-  let clientOptions = {};
+  const defaultOptions = {};
+  const optOptions = {cacheName: "DispatchEvents"};
+  const playerOptions = {cacheName: "players"};
   // await put(data.key, data.value);
   // await remove(data.key, clientOptions);
   // await clear(clientOptions);
 
 
-  await readAll(clientOptions);
-  clientOptions = {cacheName: "DispatchEvents"};
-  readAll(clientOptions);
+  await readAll(defaultOptions);
+  await readAll(optOptions);
+  readAll(playerOptions);
 })();

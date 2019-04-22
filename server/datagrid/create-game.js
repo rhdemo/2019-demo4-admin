@@ -1,4 +1,4 @@
-const log = require("../utils/log")("datagrid/init-game");
+const log = require("../utils/log")("datagrid/create-game");
 const {DATAGRID_KEYS} = require("./constants");
 const Game = require("../models/game");
 
@@ -15,7 +15,6 @@ async function createGame() {
 
     return global.game;
 }
-
 
 module.exports = createGame;
 

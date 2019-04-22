@@ -16,6 +16,7 @@ module.exports.OUTGOING_MESSAGE_TYPES = {
   ERROR: "error",
   HEARTBEAT: "heartbeat",
   GAME: "game",
+  LEADERBOARD: "leaderboard",
   PING: "ping",
   MACHINE: "machine",
   STATS: "stats",
