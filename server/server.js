@@ -34,6 +34,7 @@ global.socketServer = new WebSocket.Server({
 });
 
 global.dataClient = null;
+global.playerClient = null;
 
 log.info(`Started Admin server on ${IP}:${PORT}`);
 

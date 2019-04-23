@@ -25,7 +25,7 @@ function GameStatus({game, stats}) {
   return (
     <div className="game-status">
       <h1 className="title">Game: {renderGameState()}</h1>
-      <h3 className="subtitle">Players: {lodashGet(stats, "players.currentNumberOfEntries")}</h3>
+      <h3 className="subtitle">Players: {(lodashGet(stats, "players.globalCurrentNumberOfEntries", 1) - 1)}</h3>
     </div>
   );
 }

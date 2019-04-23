@@ -2,6 +2,9 @@ const infinispan = require("infinispan");
 const env = require("env-var");
 
 const log = require("../utils/log")("datagrid");
+const {DATAGRID_KEYS} = require("./constants");
+const leaderboardHandler = require("./leaderboard");
+const createLeaderboard = require("./create-leaderboard");
 const playerChange = require("./player-change");
 const readPlayerStats = require("./read-player-stats");
 
@@ -24,7 +27,9 @@ async function initClient() {
 
 async function handleDataChange(client, changeType, key) {
   log.debug(`Player change: ${changeType} ${key}`);
-  if (changeType === "create" || changeType === "remove") {
+  if (key === DATAGRID_KEYS.LEADERBOARD) {
+    leaderboardHandler(client, changeType, key);
+  } else if (changeType === "create" || changeType === "remove") {
     playerChange(client, changeType, key);
   }
 }
@@ -32,12 +37,13 @@ async function handleDataChange(client, changeType, key) {
 async function initPlayers() {
   try {
     global.playerClient = await initClient();
-    readPlayerStats();
+    await createLeaderboard();
+    await readPlayerStats();
   } catch (error) {
     log.error(`Error connecting to Infinispan admin data: ${error.message}`);
     log.error(error);
   }
-  return dataClient;
+  return global.playerClient;
 }
 
 module.exports = initPlayers;

@@ -4,19 +4,11 @@ const GAME_STATES = require("../models/game-states");
 const motions = require("../models/motions");
 
 async function resetGame(ws, messageObj) {
-  const clearPlayers = global.playerClient.clear();
-  const clearLeaderboard = global.dataClient.put(DATAGRID_KEYS.LEADERBOARD, JSON.stringify({players: []}));
-
   try {
-    await clearPlayers;
+    await global.playerClient.clear();
+    await global.playerClient.put(DATAGRID_KEYS.LEADERBOARD, JSON.stringify({players: []}));
   } catch (error) {
-    log.error(`error occurred clearing players. Error:`, error.message);
-  }
-
-  try {
-    await clearLeaderboard;
-  } catch (error) {
-    log.error(`error occurred resetting the leaderboard. Error:`, error.message);
+    log.error(`error occurred resetting leaderboard. Error:`, error.message);
   }
 
   try {
