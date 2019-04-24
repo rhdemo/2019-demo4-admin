@@ -6,15 +6,15 @@ const readMachines = require("./read-machines");
 const {DATAGRID_KEYS} = require("./constants");
 
 
-function pollDatagrid() {
+function pollDatagrid(interval) {
   setTimeout(async () => {
     log.debug("checking Datagrid connections");
     await checkDataClient();
     await checkOptClient();
     await checkPlayerClient();
     await readMachines(true);
-    pollDatagrid();
-  }, 10000);
+    pollDatagrid(interval);
+  }, interval);
 }
 
 async function checkDataClient() {
