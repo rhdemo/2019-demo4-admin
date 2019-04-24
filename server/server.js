@@ -10,6 +10,7 @@ const initPlanner = require("./datagrid/init-planner");
 const initPlayers = require("./datagrid/init-players");
 const pollDatagrid = require("./datagrid/poll-datagrid");
 const pollMachines = require("./datagrid/poll-machines");
+const pollLeaderboard = require("./datagrid/poll-leaderboard");
 
 const PORT = env.get("PORT", "8080").asIntPositive();
 const IP = process.env.IP || process.env.OPENSHIFT_NODEJS_IP || "0.0.0.0";
@@ -56,4 +57,5 @@ initData()
     });
     pollDatagrid(10000);
     pollMachines(500);
+    pollLeaderboard(1000);
   });

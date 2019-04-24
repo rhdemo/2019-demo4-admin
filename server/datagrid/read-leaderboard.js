@@ -9,10 +9,10 @@ async function readLeaderboard() {
     } else {
       global.leaderboard = undefined;
     }
-    return global.leaderboard;
   } catch (error) {
     log.error("Failed to read leaderboard. Error:", error.message);
   }
+  return global.leaderboard;
 }
 
 module.exports = readLeaderboard;
