@@ -31,10 +31,10 @@ async function checkDataClient() {
     if (str) {
       global.optaPlannerConfig = JSON.parse(str);
     } else {
-      log.error("OptaPLanner configuration missing");
+      log.error("OptaPlanner configuration missing");
     }
   } catch (e) {
-    log.error(e.message);
+    log.error("Error connecting to Infinispan default cache", e.message);
     await reconnectDataClient();
   }
 }
@@ -53,7 +53,7 @@ async function checkOptClient() {
   try {
     await global.optClient.stats();
   } catch (e) {
-    log.error(e.message);
+    log.error("Error connecting to Infinispan OptaPlanner cache", e.message);
     await reconnectOptClient();
   }
 }
@@ -79,7 +79,7 @@ async function checkPlayerClient() {
       log.error("Leaderboard missing");
     }
   } catch (e) {
-    log.error(e.message);
+    log.error("Error connecting to Infinispan players cache", e.message);
     await reconnectPlayerClient();
   }
 }
