@@ -55,7 +55,7 @@ initData()
         processSocketMessage(ws, message);
       });
     });
-    pollDatagrid(10000);
+    pollDatagrid(5000);
     pollMachines(500);
     pollLeaderboard(1000);
   });

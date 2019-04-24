@@ -25,6 +25,9 @@ async function readAll(options) {
 
 (async function () {
   await readAll();
+  await readAll({cacheName: "game"});
+  await readAll({cacheName: "leaderboard"});
   await readAll({cacheName: "players"});
-  readAll({cacheName: "DispatchEvents"});
+  await readAll({cacheName: "DispatchEvents"});
+  await readAll({cacheName: "camel-salesforce"});
 })();
