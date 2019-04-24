@@ -8,9 +8,11 @@ const machines = require("./models/machines");
 const initData = require("./datagrid/init-data");
 const initPlanner = require("./datagrid/init-planner");
 const initPlayers = require("./datagrid/init-players");
+const initLeaderboard = require("./datagrid/init-leaderboard");
 const pollDatagrid = require("./datagrid/poll-datagrid");
 const pollMachines = require("./datagrid/poll-machines");
 const pollLeaderboard = require("./datagrid/poll-leaderboard");
+const pollPlayers = require("./datagrid/poll-players");
 
 const PORT = env.get("PORT", "8080").asIntPositive();
 const IP = process.env.IP || process.env.OPENSHIFT_NODEJS_IP || "0.0.0.0";
@@ -35,10 +37,6 @@ global.socketServer = new WebSocket.Server({
   port: PORT
 });
 
-global.dataClient = null;
-global.playerClient = null;
-global.optClient = null;
-
 log.info(`Started Admin server on ${IP}:${PORT}`);
 
 setInterval(function () {
@@ -49,6 +47,7 @@ setInterval(function () {
 initData()
   .then(() => initPlanner())
   .then(() => initPlayers())
+  .then(() => initLeaderboard())
   .then(client => {
     global.socketServer.on("connection", function connection(ws) {
       ws.on("message", function incoming(message) {
@@ -57,5 +56,6 @@ initData()
     });
     pollDatagrid(5000);
     pollMachines(500);
-    pollLeaderboard(1000);
+    pollLeaderboard(2000);
+    pollPlayers(1000);
   });

@@ -2,7 +2,6 @@ const infinispan = require("infinispan");
 const env = require("env-var");
 
 const log = require("../utils/log")("datagrid");
-const createLeaderboard = require("./create-leaderboard");
 const readPlayerStats = require("./read-player-stats");
 
 const DATAGRID_HOST = env.get("DATAGRID_HOST").asString();
@@ -21,10 +20,9 @@ async function initClient() {
 async function initPlayers() {
   try {
     global.playerClient = await initClient();
-    await createLeaderboard();
     await readPlayerStats();
   } catch (error) {
-    log.error(`Error connecting to Infinispan admin data: ${error.message}`);
+    log.error(`Error connecting to Infinispan player data: ${error.message}`);
     log.error(error);
   }
   return global.playerClient;

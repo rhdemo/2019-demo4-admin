@@ -43,7 +43,7 @@ async function initData() {
     await createGame();
     await readPlannerConfig();
   } catch (error) {
-    log.error(`Error connecting to Infinispan admin data: ${error.message}`);
+    log.error(`Error connecting to Infinispan game data: ${error.message}`);
     log.error(error);
   }
   return global.dataClient;

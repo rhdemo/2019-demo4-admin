@@ -4,7 +4,12 @@ const {DATAGRID_KEYS} = require("../datagrid/constants");
 async function resetHandler(ws, messageObj) {
   try {
     await global.playerClient.clear();
-    await global.playerClient.put(DATAGRID_KEYS.LEADERBOARD, JSON.stringify({players: []}));
+  } catch (error) {
+    log.error(`error occurred resetting players. Error:`, error.message);
+  }
+
+  try {
+    await global.leaderboardClient.put(DATAGRID_KEYS.LEADERBOARD, JSON.stringify({players: []}));
   } catch (error) {
     log.error(`error occurred resetting leaderboard. Error:`, error.message);
   }
