@@ -49,6 +49,18 @@ function Damage({socket, game}) {
       <div className="damage">
         <h3 className="subtitle">Damage</h3>
         <form className="damage-inputs">
+          <div className="field">
+            <label className="label">Damage Multiplier</label>
+            <div className="control">
+              <input
+                className="input"
+                type="number"
+                value={game.damageMultiplier}
+                onChange={(e) => updateMultiplier(e)}
+              />
+            </div>
+          </div>
+          <hr />
           {Object.entries(game.damage).map(([motion, damage]) => (
             <div key={motion} className="field">
               <label className="label">{motion}</label>
@@ -62,17 +74,6 @@ function Damage({socket, game}) {
               </div>
             </div>
           ))}
-          <div className="field">
-            <label className="label">Damage Multiplier</label>
-            <div className="control">
-              <input
-                className="input"
-                type="number"
-                value={game.damageMultiplier}
-                onChange={(e) => updateMultiplier(e)}
-              />
-            </div>
-          </div>
         </form>
         <button
           className="button"
