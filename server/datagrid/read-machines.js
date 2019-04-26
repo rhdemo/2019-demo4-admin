@@ -16,8 +16,14 @@ async function readMachines(broadcastAll) {
 
 async function refreshMachine(machine, broadcastAll) {
   try {
+    const startTime = new Date();
     let response = await axios({method: "get", url: machine.url});
     machine.value = response.data;
+    const endTime = new Date();
+    const timeDiff = (endTime - startTime) / 1000;
+    if (timeDiff > 1) {
+      log.warn(`Polling health took ${timeDiff.toFixed(1)} seconds`);
+    }
   } catch (error) {
     log.error(`error occurred in http call get counter for machine ${machine.id}`);
     log.error(error.message);
