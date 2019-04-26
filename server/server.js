@@ -5,6 +5,7 @@ const {OUTGOING_MESSAGE_TYPES} = require("./message-types");
 const broadcast = require("./utils/broadcast");
 const processSocketMessage = require("./socket-handlers/process-socket-message");
 const machines = require("./models/machines");
+require("./datagrid/enable-logging");
 const initData = require("./datagrid/init-data");
 const initPlanner = require("./datagrid/init-planner");
 const initPlayers = require("./datagrid/init-players");
