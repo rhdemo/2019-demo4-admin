@@ -6,7 +6,8 @@ const bypassAI = require("./bypass-ai");
 const ai = require("./ai");
 const scoring = require("./scoring");
 const damage = require("./damage");
-const initialDamageMultiplier =  require("./damage-multiplier");
+const damageMultiplier =  require("./damage-multiplier");
+const dashboardTransparent =  require("./dashboard-transparent");
 
 class Game {
   constructor() {
@@ -18,7 +19,8 @@ class Game {
     this.ai = {...ai};
     this.scoring = {...scoring};
     this.damage = {...damage};
-    this.damageMultiplier = initialDamageMultiplier;
+    this.damageMultiplier = damageMultiplier;
+    this.dashboardTransparent = dashboardTransparent;
   }
 }
 

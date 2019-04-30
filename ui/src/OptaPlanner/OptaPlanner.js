@@ -6,6 +6,7 @@ import Solver from "./Solver";
 import DispatchMechanics from "./DispatchMechanics";
 import Simulation from "./Simulation";
 import Mechanics from "./Mechanics";
+import Dashboard from "../Game/Dashboard";
 
 import "./OptaPlanner.scss";
 
@@ -20,6 +21,9 @@ function OptaPlanner({socket, game, stats, optaplanner, optaplannerConfig, optap
       <Solver socket={socket} optaplanner={optaplanner}/>
       <DispatchMechanics socket={socket} optaplanner={optaplanner} optaplannerConfig={optaplannerConfig}/>
       <Mechanics socket={socket} optaplanner={optaplanner}/>
+      <div className="subsection">
+        <Dashboard socket={socket} game={game}/>
+      </div>
       <Simulation socket={socket} optaplanner={optaplanner}  optaplannerConfig={optaplannerConfig} optaplannerOptions={optaplannerOptions}/>
     </div>
   );

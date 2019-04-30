@@ -10,12 +10,14 @@ import Motions from "./Motions";
 import State from "./State";
 import Scoring from "./Scoring";
 import Damage from "./Damage";
+import Dashboard from "./Dashboard";
 
 
 const TAB_CHOICES = {
   DAMAGE: "damage",
   SCORING: "scoring",
-  AI: "ai"
+  AI: "ai",
+  DASHBOARD: "dashboard"
 };
 
 
@@ -31,15 +33,16 @@ function Game({socket, game, stats}) {
   }
 
   function renderSettings() {
-    if (tab === TAB_CHOICES.AI) {
-      return <AI socket={socket} game={game}/>;
+    switch (tab) {
+      case TAB_CHOICES.AI:
+        return <AI socket={socket} game={game}/>;
+      case TAB_CHOICES.SCORING:
+        return <Scoring socket={socket} game={game}/>;
+      case TAB_CHOICES.DASHBOARD:
+        return <Dashboard socket={socket} game={game}/>;
+      default:
+        return <Damage socket={socket} game={game}/>;
     }
-
-    if (tab === TAB_CHOICES.SCORING) {
-      return <Scoring socket={socket} game={game}/>;
-    }
-
-    return <Damage socket={socket} game={game}/>;
   }
 
   if (!game) {
@@ -87,6 +90,9 @@ function Game({socket, game, stats}) {
             </li>
             <li className={classNames({"is-active": tab === TAB_CHOICES.AI})}>
               <a onClick={() => updateTab(TAB_CHOICES.AI)}>AI</a>
+            </li>
+            <li className={classNames({"is-active": tab === TAB_CHOICES.DASHBOARD})}>
+              <a onClick={() => updateTab(TAB_CHOICES.DASHBOARD)}>Dashboard</a>
             </li>
           </ul>
         </div>
