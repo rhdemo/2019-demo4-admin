@@ -5,4 +5,5 @@ module.exports = {
   roll: 50,
   fever: 50,
   floss: 100,
+  bonus: 1000
 };
