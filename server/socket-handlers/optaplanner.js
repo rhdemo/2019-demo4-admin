@@ -1,4 +1,4 @@
-const axios = require("axios");
+const request = require("../utils/request");
 const env = require("env-var");
 const log = require("../utils/log")("socket-handlers/optaplanner");
 
@@ -25,7 +25,7 @@ async function optaplannerHandler(ws, messageObj) {
   }
 
   try {
-   await axios({
+   await request({
       method: method || "POST",
       url: new URL(path, OPTAPLANNER_URL).href,
       data: messageObj.data

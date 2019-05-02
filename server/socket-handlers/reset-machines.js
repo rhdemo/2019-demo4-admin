@@ -1,4 +1,4 @@
-const axios = require("axios");
+const request = require("../utils/request");
 const env = require("env-var");
 const log = require("../utils/log")("socket-handlers/optaplanner");
 
@@ -9,7 +9,7 @@ async function resetMachines(ws, messageObj) {
   let promises = [];
 
   for (let i = 0; i < NUM_MACHINES; i++) {
-    promises.push(axios({
+    promises.push(request({
       method: "POST",
       url: new URL("/simulation/heal", OPTAPLANNER_URL).href,
       data: {machineIndex: i}

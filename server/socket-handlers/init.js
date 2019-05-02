@@ -1,4 +1,4 @@
-const axios = require("axios");
+const request = require("../utils/request");
 const env = require("env-var");
 const log = require("../utils/log")("socket-handlers/init");
 const {OUTGOING_MESSAGE_TYPES} = require("../message-types");
@@ -37,7 +37,7 @@ async function sendOptEvents(ws) {
 
 async function sendOptOptions(ws) {
   try {
-    let response = await axios({
+    let response = await request({
       method: "GET",
       url: new URL("/simulation/damageDistributionTypes", OPTAPLANNER_URL).href
     });
