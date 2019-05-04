@@ -1,14 +1,15 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUndo } from "@fortawesome/free-solid-svg-icons";
+import SavingEditField from "../common/SavingEditField";
 
 function Damage({socket, password, game}) {
   function reset() {
     socket.json({password, type: "reset-damage"});
   }
 
-  function updateDamage(motion, event) {
-    const amount = parseFloat(event.target.value);
+  function updateDamage(motion, value) {
+    const amount = parseFloat(value);
     if (isNaN(amount)) {
       return;
     }
@@ -18,8 +19,8 @@ function Damage({socket, password, game}) {
   }
 
 
-  function updateMultiplier(event) {
-    const damageMultiplier = parseFloat(event.target.value);
+  function updateMultiplier(value) {
+    const damageMultiplier = parseFloat(value);
     if (isNaN(damageMultiplier)) {
       return;
     }
@@ -51,25 +52,20 @@ function Damage({socket, password, game}) {
         <form className="damage-inputs">
           <div className="field">
             <label className="label">Damage Multiplier</label>
-            <div className="control">
-              <input
-                className="input"
-                type="number"
-                value={game.damageMultiplier}
-                onChange={(e) => updateMultiplier(e)}
-              />
-            </div>
+            <SavingEditField
+              type="number"
+              value={game.damageMultiplier}
+              onSave={updateMultiplier}/>
           </div>
           <hr />
           {Object.entries(game.damage).map(([motion, damage]) => (
             <div key={motion} className="field">
               <label className="label">{motion}</label>
               <div className="control">
-                <input
-                  className="input"
+                <SavingEditField
                   type="number"
                   value={damage}
-                  onChange={(e) => updateDamage(motion, e)}
+                  onSave={value => updateDamage(motion, value)}
                 />
               </div>
             </div>

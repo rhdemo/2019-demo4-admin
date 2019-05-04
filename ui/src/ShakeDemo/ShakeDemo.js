@@ -1,6 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUndo } from "@fortawesome/free-solid-svg-icons";
+import SavingEditField from "../common/SavingEditField";
 
 import "./ShakeDemo.scss";
 
@@ -15,8 +16,8 @@ function ShakeDemo({socket, password, game}) {
     socket.json({password, type: "game", game: {shakeDemo}});
   }
 
-  function updateMultiplier(event) {
-    const multiplier = parseFloat(event.target.value);
+  function updateMultiplier(value) {
+    const multiplier = parseFloat(value);
     if (isNaN(multiplier)) {
       return;
     }
@@ -24,8 +25,8 @@ function ShakeDemo({socket, password, game}) {
     socket.json({password, type: "game", game: {shakeDemo}});
   }
 
-  function updateMax(event) {
-    const maxPerSecond = parseFloat(event.target.value);
+  function updateMax(value) {
+    const maxPerSecond = parseFloat(value);
     if (isNaN(maxPerSecond)) {
       return;
     }
@@ -58,25 +59,17 @@ function ShakeDemo({socket, password, game}) {
           </div>
           <div className="field">
             <label className="label">Message Multiplier</label>
-            <div className="field">
-              <input
-                className="input"
-                type="number"
-                value={game.shakeDemo.multiplier}
-                onChange={updateMultiplier}
-              />
-            </div>
+            <SavingEditField
+              type="number"
+              value={game.shakeDemo.multiplier}
+              onSave={updateMultiplier}/>
           </div>
           <div className="field">
             <label className="label">Message Maximum</label>
-            <div className="field">
-              <input
-                className="input"
-                type="number"
-                value={game.shakeDemo.maxPerSecond}
-                onChange={updateMax}
-              />
-            </div>
+            <SavingEditField
+              type="number"
+              value={game.shakeDemo.maxPerSecond}
+              onSave={updateMax}/>
           </div>
         </form>
         <button

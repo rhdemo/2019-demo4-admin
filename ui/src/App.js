@@ -189,7 +189,7 @@ function App() {
             </div>
           </div>
           <button
-            className="button"
+            className="button is-primary"
             type="submit">
             Submit
           </button>

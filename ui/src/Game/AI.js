@@ -1,6 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUndo } from "@fortawesome/free-solid-svg-icons";
+import SavingEditField from "../common/SavingEditField";
 
 function AI({socket, password, game}) {
   function reset() {
@@ -12,8 +13,8 @@ function AI({socket, password, game}) {
     socket.json({password, type: "game", game: {bypassAI}});
   }
 
-  function update(motion, event) {
-    const probability = parseFloat(event.target.value);
+  function update(motion, value) {
+    const probability = parseFloat(value);
     if (isNaN(probability)) {
       return;
     }
@@ -47,14 +48,11 @@ function AI({socket, password, game}) {
         {Object.entries(game.ai).map(([motion, probability]) => (
           <div key={motion} className="field">
             <label className="label">{motion}</label>
-            <div className="control">
-              <input
-                className="input"
-                type="number"
-                value={probability}
-                onChange={(e) => update(motion, e)}
-              />
-            </div>
+            <SavingEditField
+              type="number"
+              value={probability}
+              onSave={value => update(motion, value)}
+            />
           </div>
         ))}
       </form>

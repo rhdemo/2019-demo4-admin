@@ -1,14 +1,15 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUndo } from "@fortawesome/free-solid-svg-icons";
+import SavingEditField from "../common/SavingEditField";
 
 function Scoring({socket, password, game}) {
   function reset() {
     socket.json({password, type: "reset-scoring"});
   }
 
-  function update(motion, event) {
-    const score = parseInt(event.target.value);
+  function update(motion, value) {
+    const score = parseInt(value);
     if (isNaN(score)) {
       return;
     }
@@ -42,14 +43,11 @@ function Scoring({socket, password, game}) {
           {Object.entries(game.scoring).map(([motion, score]) => (
             <div key={motion} className="field">
               <label className="label">{motion}</label>
-              <div className="control">
-                <input
-                  className="input"
-                  type="number"
-                  value={score}
-                  onChange={(e) => update(motion, e)}
-                />
-              </div>
+              <SavingEditField
+                type="number"
+                value={score}
+                onChange={value => update(motion, value)}
+              />
             </div>
           ))}
         </form>
