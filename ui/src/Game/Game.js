@@ -21,27 +21,27 @@ const TAB_CHOICES = {
 };
 
 
-function Game({socket, game, stats}) {
+function Game({socket, password, game, stats}) {
   const [tab, updateTab] = useState(TAB_CHOICES.DAMAGE);
 
   function resetGame() {
-    socket.json({type: "reset-game"});
+    socket.json({password, type: "reset-game"});
   }
 
   function resetAll() {
-    socket.json({type: "reset"});
+    socket.json({password, type: "reset"});
   }
 
   function renderSettings() {
     switch (tab) {
       case TAB_CHOICES.AI:
-        return <AI socket={socket} game={game}/>;
+        return <AI socket={socket} password={password} game={game}/>;
       case TAB_CHOICES.SCORING:
-        return <Scoring socket={socket} game={game}/>;
+        return <Scoring socket={socket} password={password} game={game}/>;
       case TAB_CHOICES.DASHBOARD:
-        return <Dashboard socket={socket} game={game}/>;
+        return <Dashboard socket={socket} password={password} game={game}/>;
       default:
-        return <Damage socket={socket} game={game}/>;
+        return <Damage socket={socket} password={password} game={game}/>;
     }
   }
 
@@ -67,8 +67,8 @@ function Game({socket, game, stats}) {
     <div className="game">
       <div className="gameplay is-half-tablet">
         <GameStatus game={game} stats={stats}/>
-        <Motions socket={socket} game={game}/>
-        <State socket={socket} game={game}/>
+        <Motions socket={socket} password={password} game={game}/>
+        <State socket={socket} password={password} game={game}/>
         <button
           className="button is-danger"
           type="button"

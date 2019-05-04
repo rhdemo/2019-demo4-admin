@@ -1,9 +1,22 @@
+const env = require("env-var");
 const log = require("../utils/log")("socket-handlers");
 const {INCOMING_MESSAGE_TYPES} = require("../message-types");
+const PASSWORD = env.get("PASSWORD", "").asString();
 
 
 function processSocketMessage(ws, messageStr) {
-  let messageObj = JSON.parse(messageStr);
+  let messageObj;
+
+  try {
+    messageObj = JSON.parse(messageStr);
+  } catch (error) {
+    log.error("Malformed socket message JSON:", error.message);
+    return;
+  }
+
+  if (messageObj.password !== PASSWORD) {
+    unauthorizedHandler(ws, messageObj);
+  }
 
   switch (messageObj.type) {
     case INCOMING_MESSAGE_TYPES.INIT:
@@ -70,6 +83,7 @@ function wrapMessageHandler (type, fn) {
     }
 }
 
+const unauthorizedHandler = require("./unauthorized");
 const initHandler = wrapMessageHandler(INCOMING_MESSAGE_TYPES.INIT, require("./init"));
 const pingHandler = wrapMessageHandler(INCOMING_MESSAGE_TYPES.PING, function (ws, messageObj) {});
 const gameHandler = wrapMessageHandler(INCOMING_MESSAGE_TYPES.GAME, require("./game"));

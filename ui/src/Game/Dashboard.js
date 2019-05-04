@@ -1,9 +1,9 @@
 import React from "react";
 
-function Dashboard({socket, game}) {
+function Dashboard({socket, password, game}) {
   function toggleTransparency() {
     const dashboardTransparent = !game.dashboardTransparent;
-    socket.json({type: "game", game: {dashboardTransparent}});
+    socket.json({password, type: "game", game: {dashboardTransparent}});
   }
 
   return (

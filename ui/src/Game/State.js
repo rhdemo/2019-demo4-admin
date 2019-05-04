@@ -11,14 +11,14 @@ const GAME_STATES = {
   ACTIVE: "active",
 };
 
-function State({socket, game}) {
+function State({socket, password, game}) {
 
   function updateGameState(gameState) {
-    socket.json({type: "game", game: {state: gameState}});
+    socket.json({password, type: "game", game: {state: gameState}});
   }
 
   function resetGame() {
-    socket.json({type: "reset-game"});
+    socket.json({password, type: "reset-game"});
   }
 
   if (!game) {

@@ -2,7 +2,7 @@ import React, { useState, useReducer} from "react";
 import Sockette from "sockette";
 import classNames from 'classnames';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faSpinner, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 
 import ShakeDemo from "./ShakeDemo/ShakeDemo";
 import Game from "./Game/Game";
@@ -13,6 +13,7 @@ import "./App.scss";
 
 const initialState = {
   loading: true,
+  validated: null,
   connection: "loading",
   machines: {},
   stats: {},
@@ -27,6 +28,11 @@ const initialState = {
 
 function reducer(state, action) {
   switch (action.type) {
+    case "password":
+      return {
+        ...state,
+        password: action.password
+      };
     case "connection":
       return {
         ...state,
@@ -36,6 +42,7 @@ function reducer(state, action) {
       return processMessage(state, action.message);
     default:
       console.warn("Unhandled reducer action", action);
+      return state;
   }
 }
 
@@ -44,6 +51,15 @@ function processMessage(state, message) {
   let value = {};
 
   switch (type) {
+    case "error":
+      value.error = data;
+      break;
+    case "validated":
+      value.validated = data;
+      if (value.validated) {
+        value.error = false;
+      }
+      break;
     case "heartbeat":
       value.heartbeat = new Date();
       break;
@@ -72,11 +88,13 @@ const NAV_CHOICES = {
 };
 
 function App() {
-  const socketUrl = `ws://${window.location.host}/admin-socket`;
+  const protocol = window.location.protocol.includes('https') ? 'wss' : 'ws';
+  const socketUrl = `${protocol}://${window.location.host}/admin-socket`;
 
   const [socket] = useState(connect);
   const [state, dispatch] = useReducer(reducer, initialState);
   const [navSelection, updateNavSelection] = useState(NAV_CHOICES.SHAKE);
+  const [passwordField, setPasswordField] = useState("");
 
   function connect() {
     return new Sockette(socketUrl, {
@@ -95,10 +113,6 @@ function App() {
     dispatch({
       type: "connection",
       connection: "connecting"
-    });
-
-    socket.json({
-      type: "init"
     });
   }
 
@@ -124,6 +138,21 @@ function App() {
     });
   }
 
+  function onPasswordSubmit(e) {
+    e.preventDefault();
+
+    const password = passwordField;
+    dispatch({
+      type: "password",
+      password
+    });
+
+    socket.json({
+      password,
+      type: "init"
+    });
+  }
+
   function renderConnectionBar() {
     return (
       <nav className={"connection-status level " + state.connection}>
@@ -142,6 +171,43 @@ function App() {
           </div>
         </div>
       </nav>);
+  }
+
+  function renderPasswordField() {
+    return (
+      <section className="section">
+        <form className="password-inputs" onSubmit={onPasswordSubmit}>
+          <div className="field">
+            <label className="label">Password</label>
+            <div className="control">
+              <input
+                className="input password"
+                type="text"
+                value={passwordField}
+                onChange={e => setPasswordField(e.target.value)}
+              />
+            </div>
+          </div>
+          <button
+            className="button"
+            type="submit">
+            Submit
+          </button>
+        </form>
+      </section>
+    );
+  }
+
+  function renderError() {
+    if (state.error) {
+      return (
+        <section className="section">
+          <div className="notification is-danger">
+            <h3 className="subtitle"><FontAwesomeIcon icon={faExclamationTriangle}/> Error</h3>
+            <p>{state.error.code}: {state.error.message}</p>
+          </div>
+        </section>);
+    }
   }
 
   function renderNavbar() {
@@ -182,7 +248,7 @@ function App() {
     if (navSelection === NAV_CHOICES.SHAKE) {
       return (
         <section className="section">
-          <ShakeDemo socket={socket} game={state.game}/>
+          <ShakeDemo socket={socket} password={state.password} game={state.game}/>
         </section>
       );
     }
@@ -192,7 +258,7 @@ function App() {
         <section className="section">
           <div className="columns is-desktop">
             <div className="column">
-              <OptaPlanner socket={socket}
+              <OptaPlanner socket={socket} password={state.password}
                            game={state.game}
                            stats={state.stats}
                            optaplanner={state.optaplanner}
@@ -200,7 +266,7 @@ function App() {
                            optaplannerOptions={state.optaplannerOptions}/>
             </div>
             <div className="column">
-              <MachineList socket={socket} machines={state.machines}/>
+              <MachineList socket={socket} password={state.password} machines={state.machines}/>
             </div>
           </div>
         </section>
@@ -221,22 +287,32 @@ function App() {
       <section className="section">
         <div className="columns is-8 is-desktop">
           <div className="column">
-            <Game socket={socket} game={state.game} stats={state.stats}/>
+            <Game socket={socket} password={state.password} game={state.game} stats={state.stats}/>
           </div>
           <div className="column">
-            <MachineList socket={socket} machines={state.machines}/>
+            <MachineList socket={socket} password={state.password} machines={state.machines}/>
           </div>
         </div>
       </section>
     );
   }
 
+  if (!state.validated) {
+    return (
+        <div className="app">
+          {renderConnectionBar()}
+          {renderPasswordField()}
+          {renderError()}
+        </div>
+    );
+  }
+
   return (
-    <div className="app">
-      {renderConnectionBar()}
-      {renderNavbar()}
-      {renderMain()}
-    </div>
+      <div className="app">
+        {renderConnectionBar()}
+        {renderNavbar()}
+        {renderMain()}
+      </div>
   );
 }
 

@@ -4,14 +4,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPause, faPlay, faCog} from "@fortawesome/free-solid-svg-icons";
 
 
-function DispatchMechanics({socket, optaplanner, optaplannerConfig}) {
+function DispatchMechanics({socket, password, optaplanner, optaplannerConfig}) {
 
   function pause() {
-    socket.json({type: "optaplanner", action: "pauze"});
+    socket.json({password, type: "optaplanner", action: "pauze"});
   }
 
   function unpause() {
-    socket.json({type: "optaplanner", action: "unpauze"});
+    socket.json({password, type: "optaplanner", action: "unpauze"});
   }
 
   function getStatus() {

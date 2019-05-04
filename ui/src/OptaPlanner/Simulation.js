@@ -4,17 +4,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStop, faPlay, faCog} from "@fortawesome/free-solid-svg-icons";
 
 
-function Simulation({socket, optaplanner, optaplannerConfig, optaplannerOptions}) {
+function Simulation({socket, password, optaplanner, optaplannerConfig, optaplannerOptions}) {
   const damageOptions = optaplannerOptions ? optaplannerOptions.simulationDamageTypes : ["ERROR"];
   const [totalDamagePerSecond, setTotalDamagePerSecond] = useState(0.16);
   const [damageDistributionType, setDamageDistributionType] = useState("GAUSS");
 
   function stop() {
-    socket.json({type: "optaplanner", action: "stop"});
+    socket.json({password, type: "optaplanner", action: "stop"});
   }
 
   function start() {
-    socket.json({type: "optaplanner", action: "start", data: {totalDamagePerSecond, damageDistributionType}});
+    socket.json({password, type: "optaplanner", action: "start", data: {totalDamagePerSecond, damageDistributionType}});
   }
 
   function getStatus() {

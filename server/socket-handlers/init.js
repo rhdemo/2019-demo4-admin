@@ -2,9 +2,11 @@ const request = require("../utils/request");
 const env = require("env-var");
 const log = require("../utils/log")("socket-handlers/init");
 const {OUTGOING_MESSAGE_TYPES} = require("../message-types");
+const PASSWORD = env.get("PASSWORD", "").asString();
 const OPTAPLANNER_URL = env.get("OPTAPLANNER_URL").asString();
 
 async function initHandler(ws, messageObj) {
+  ws.send(JSON.stringify({type: OUTGOING_MESSAGE_TYPES.VALIDATED, data: messageObj.password === PASSWORD, action: "modify"}));
   ws.send(JSON.stringify({type: OUTGOING_MESSAGE_TYPES.GAME, data: global.game, action: "modify"}));
   ws.send(JSON.stringify({type: OUTGOING_MESSAGE_TYPES.LEADERBOARD, data: global.leaderboard, action: "modify"}));
   ws.send(JSON.stringify({type: OUTGOING_MESSAGE_TYPES.STATS, data: {players: playerStats}}));

@@ -2,9 +2,9 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUndo } from "@fortawesome/free-solid-svg-icons";
 
-function Damage({socket, game}) {
+function Damage({socket, password, game}) {
   function reset() {
-    socket.json({type: "reset-damage"});
+    socket.json({password, type: "reset-damage"});
   }
 
   function updateDamage(motion, event) {
@@ -14,7 +14,7 @@ function Damage({socket, game}) {
     }
     let damage = {...game.damage};
     damage[motion] = amount;
-    socket.json({type: "game", game: {damage}});
+    socket.json({password, type: "game", game: {damage}});
   }
 
 
@@ -23,7 +23,7 @@ function Damage({socket, game}) {
     if (isNaN(damageMultiplier)) {
       return;
     }
-    socket.json({type: "game", game: {damageMultiplier}});
+    socket.json({password, type: "game", game: {damageMultiplier}});
   }
 
 

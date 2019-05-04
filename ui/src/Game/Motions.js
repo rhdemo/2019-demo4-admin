@@ -9,11 +9,11 @@ const MOTIONS = {
   FLOSS: "floss",
 };
 
-function Game({socket, game}) {
+function Game({socket, password, game}) {
   function toggleMotion(motion) {
     const motions = {...game.motions};
     motions[motion] = !motions[motion];
-    socket.json({type: "game", game: {motions}});
+    socket.json({password, type: "game", game: {motions}});
   }
 
   if (!game || !game.motions) {

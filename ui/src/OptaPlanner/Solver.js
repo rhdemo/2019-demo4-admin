@@ -1,13 +1,18 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUndo } from "@fortawesome/free-solid-svg-icons";
+import { faUndo, faProjectDiagram } from "@fortawesome/free-solid-svg-icons";
 
 
-function Solver({socket, optaplanner, optaPlannerConfig}) {
+function Solver({socket, password, optaplanner, optaPlannerConfig}) {
 
   function reset() {
-    socket.json({type: "optaplanner", action: "reset"});
+    socket.json({password, type: "optaplanner", action: "reset"});
   }
+
+  function setup() {
+    socket.json({password, type: "optaplanner", action: "setupStage"});
+  }
+
 
   return (
     <div className="solver subsection">
@@ -22,6 +27,14 @@ function Solver({socket, optaplanner, optaPlannerConfig}) {
             reset();
           }}>
           <FontAwesomeIcon icon={faUndo}/> Reset
+        </button>
+        <button
+          className="button is-"
+          type="button"
+          onClick={() => {
+            setup();
+          }}>
+          <FontAwesomeIcon icon={faProjectDiagram}/> Setup Stage
         </button>
       </div>
     </div>

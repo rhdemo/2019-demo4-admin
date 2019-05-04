@@ -49,20 +49,20 @@ function getDamageClass(machine) {
 }
 
 
-function MachineList({socket, machines}) {
+function MachineList({socket, password, machines}) {
   function reset() {
-    socket.json({type: "reset-machines"});
+    socket.json({password, type: "reset-machines"});
   }
 
   function damageMachine(machine, damagePercent) {
     const machineIndex = machine.optaplannerId;
     const amount = damagePercent / 100;
-    socket.json({type: "optaplanner", action: "damage", data: {machineIndex, amount}});
+    socket.json({password, type: "optaplanner", action: "damage", data: {machineIndex, amount}});
   }
 
   function healMachine(machine) {
     const machineIndex = machine.optaplannerId;
-    socket.json({type: "optaplanner", action: "heal", data: {machineIndex}});
+    socket.json({password, type: "optaplanner", action: "heal", data: {machineIndex}});
   }
 
   if (!machines) {

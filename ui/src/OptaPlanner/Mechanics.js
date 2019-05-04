@@ -4,14 +4,14 @@ import { faMinus, faPlus, } from "@fortawesome/free-solid-svg-icons";
 import MechanicList from "./MechanicList";
 
 
-function Mechanics({socket, optaplanner}) {
+function Mechanics({socket, password, optaplanner}) {
 
   function remove() {
-    socket.json({type: "optaplanner", action: "removeMechanic"});
+    socket.json({password, type: "optaplanner", action: "removeMechanic"});
   }
 
   function add() {
-    socket.json({type: "optaplanner", action: "addMechanic"});
+    socket.json({password, type: "optaplanner", action: "addMechanic"});
   }
 
   return (
@@ -35,7 +35,7 @@ function Mechanics({socket, optaplanner}) {
           <FontAwesomeIcon icon={faPlus}/> Add
         </button>
       </div>
-      <MechanicList socket={socket} optaplanner={optaplanner}/>
+      <MechanicList socket={socket} password={password} optaplanner={optaplanner}/>
     </div>
   );
 }

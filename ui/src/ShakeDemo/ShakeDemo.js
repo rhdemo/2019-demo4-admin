@@ -4,15 +4,15 @@ import { faUndo } from "@fortawesome/free-solid-svg-icons";
 
 import "./ShakeDemo.scss";
 
-function ShakeDemo({socket, game}) {
+function ShakeDemo({socket, password, game}) {
   function reset() {
-    socket.json({type: "reset-shake-demo"});
+    socket.json({password, type: "reset-shake-demo"});
   }
 
   function toggleShakeDemo() {
     const enabled = !game.shakeDemo.enabled;
     let shakeDemo = {...game.shakeDemo, enabled};
-    socket.json({type: "game", game: {shakeDemo}});
+    socket.json({password, type: "game", game: {shakeDemo}});
   }
 
   function updateMultiplier(event) {
@@ -21,7 +21,7 @@ function ShakeDemo({socket, game}) {
       return;
     }
     let shakeDemo = {...game.shakeDemo, multiplier};
-    socket.json({type: "game", game: {shakeDemo}});
+    socket.json({password, type: "game", game: {shakeDemo}});
   }
 
   function updateMax(event) {
@@ -30,7 +30,7 @@ function ShakeDemo({socket, game}) {
       return;
     }
     let shakeDemo = {...game.shakeDemo, maxPerSecond};
-    socket.json({type: "game", game: {shakeDemo}});
+    socket.json({password, type: "game", game: {shakeDemo}});
   }
 
   if (!game || !game.shakeDemo) {

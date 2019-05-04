@@ -2,14 +2,14 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUndo } from "@fortawesome/free-solid-svg-icons";
 
-function AI({socket, game}) {
+function AI({socket, password, game}) {
   function reset() {
-    socket.json({type: "reset-ai"});
+    socket.json({password, type: "reset-ai"});
   }
 
   function toggleAI() {
     const bypassAI = !game.bypassAI;
-    socket.json({type: "game", game: {bypassAI}});
+    socket.json({password, type: "game", game: {bypassAI}});
   }
 
   function update(motion, event) {
@@ -19,7 +19,7 @@ function AI({socket, game}) {
     }
     let ai = {...game.ai};
     ai[motion] = probability;
-    socket.json({type: "game", game: {ai}});
+    socket.json({password, type: "game", game: {ai}});
   }
 
 

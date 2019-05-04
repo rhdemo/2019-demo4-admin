@@ -6,6 +6,7 @@ const OPTAPLANNER_URL = env.get("OPTAPLANNER_URL").asString();
 
 const OPTAPLANNER_ACTIONS = {
   reset: {method: "POST", path: "/app/reset"},
+  setupStage: {method: "POST", path: "/app/setupStage"},
   removeMechanic: {method: "POST", path: "/app/removeMechanic"},
   addMechanic: {method: "POST", path: "/app/addMechanic"},
   pauze: {method: "POST", path: "/app/pauzeDispatch"},

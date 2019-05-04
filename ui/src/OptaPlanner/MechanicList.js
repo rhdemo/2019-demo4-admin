@@ -23,7 +23,7 @@ function getMechanicList(optaplanner) {
   return mechanics
 }
 
-function MechanicList({socket, optaplanner}) {
+function MechanicList({socket, password, optaplanner}) {
   const mechanicArray = getMechanicList(optaplanner);
 
   if (!mechanicArray || mechanicArray.length === 0) {

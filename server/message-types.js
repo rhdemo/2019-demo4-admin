@@ -13,6 +13,7 @@ module.exports.INCOMING_MESSAGE_TYPES = {
 };
 
 module.exports.OUTGOING_MESSAGE_TYPES = {
+  VALIDATED: "validated",
   ERROR: "error",
   HEARTBEAT: "heartbeat",
   GAME: "game",

@@ -2,9 +2,9 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUndo } from "@fortawesome/free-solid-svg-icons";
 
-function Scoring({socket, game}) {
+function Scoring({socket, password, game}) {
   function reset() {
-    socket.json({type: "reset-scoring"});
+    socket.json({password, type: "reset-scoring"});
   }
 
   function update(motion, event) {
@@ -14,7 +14,7 @@ function Scoring({socket, game}) {
     }
     let scoring = {...game.scoring};
     scoring[motion] = score;
-    socket.json({type: "game", game: {scoring}});
+    socket.json({password, type: "game", game: {scoring}});
   }
 
 
