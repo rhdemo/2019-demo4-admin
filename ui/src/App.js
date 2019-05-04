@@ -2,7 +2,7 @@ import React, { useState, useReducer} from "react";
 import Sockette from "sockette";
 import classNames from 'classnames';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
+import { faSpinner, faExclamationTriangle, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 import ShakeDemo from "./ShakeDemo/ShakeDemo";
 import Game from "./Game/Game";
@@ -94,6 +94,7 @@ function App() {
   const [socket] = useState(connect);
   const [state, dispatch] = useReducer(reducer, initialState);
   const [navSelection, updateNavSelection] = useState(NAV_CHOICES.SHAKE);
+  const [showPassword, setShowPassword] = useState(false);
   const [passwordField, setPasswordField] = useState("");
 
   function connect() {
@@ -174,6 +175,15 @@ function App() {
   }
 
   function renderPasswordField() {
+    let type, icon;
+    if (showPassword) {
+      type = "text";
+      icon = faEyeSlash;
+    } else {
+      type = "password";
+      icon = faEye;
+    }
+
     return (
       <section className="section">
         <form className="password-inputs" onSubmit={onPasswordSubmit}>
@@ -182,10 +192,16 @@ function App() {
             <div className="control">
               <input
                 className="input password"
-                type="text"
+                type={type}
                 value={passwordField}
                 onChange={e => setPasswordField(e.target.value)}
               />
+              <button
+                className="button hide-border"
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}>
+                <FontAwesomeIcon icon={icon}/>
+              </button>
             </div>
           </div>
           <button

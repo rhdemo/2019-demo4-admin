@@ -17,8 +17,13 @@
     }
   }
 
-  input.password {
-    max-width: 20em;
+  .password-inputs {
+    input.password {
+      max-width: 20em;
+    }
+    .button.hide-border {
+      border: none;
+    }
   }
 
   .navbar {
