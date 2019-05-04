@@ -13,7 +13,7 @@ function SavingEditField({type, value, onSave}) {
     setEditMode(true);
   }
 
-  function onCancelClick() {
+  function onCancel() {
     setEditMode(false);
   }
 
@@ -30,6 +30,10 @@ function SavingEditField({type, value, onSave}) {
     if (e.key === "Enter") {
       onSaveTriggered();
     }
+
+    if (e.key === "Escape") {
+      onCancel();
+    }
   }
 
   if (editMode) {
@@ -45,7 +49,7 @@ function SavingEditField({type, value, onSave}) {
         <button
           className="button"
           type="button"
-          onClick={onCancelClick}>
+          onClick={onCancel}>
           <FontAwesomeIcon icon={faUndo}/>
         </button>
         <button
