@@ -2,6 +2,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import getMachineViz from "../common/getMachineViz"
+import SavingEditField from "../common/SavingEditField";
 import "./MachineList.scss";
 
 const MAX_HEALTH = 1000000000000000000;
@@ -48,10 +49,24 @@ function getDamageClass(machine) {
   return "healthy";
 }
 
-
-function MachineList({socket, password, machines}) {
+function MachineList({socket, password, game, machines}) {
   function reset() {
     socket.json({password, type: "reset-machines"});
+  }
+
+  function updateDamageMultiplier(value) {
+    const damageMultiplier = parseFloat(value);
+    if (isNaN(damageMultiplier)) {
+      return;
+    }
+    socket.json({password, type: "game", game: {damageMultiplier}});
+  }
+
+  function incrementDamageMultiplier(changeStr) {
+    const change = parseFloat(changeStr);
+    // I hate floats
+    let newValue = Math.round(game.damageMultiplier * 1000 + change * 1000) / 1000;
+    updateDamageMultiplier(newValue);
   }
 
   function damageMachine(machine, damagePercent) {
@@ -78,19 +93,63 @@ function MachineList({socket, password, machines}) {
   return (
     <div className="machine-list">
       <h1 className="title">Machines</h1>
+      <div className="damage-multiplier">
+        <div className="field">
+          <label className="label">Damage Multiplier</label>
+          <SavingEditField
+            type="number"
+            value={game.damageMultiplier}
+            onSave={updateDamageMultiplier}/>
+        </div>
+        <div className="button-bar">
+          <button
+            className="button"
+            type="button"
+            onClick={() => {
+              incrementDamageMultiplier(-0.1);
+            }}>-0.1
+          </button>
+          <button
+            className="button"
+            type="button"
+            onClick={() => {
+              incrementDamageMultiplier(-0.01);
+            }}>-0.01
+          </button>
+          <button
+            className="button"
+            type="button"
+            onClick={() => {
+              incrementDamageMultiplier(-0.001);
+            }}>-0.001
+          </button>
+          <button
+            className="button"
+            type="button"
+            onClick={() => {
+              incrementDamageMultiplier(0.001);
+            }}>+0.001
+          </button>
+          <button
+            className="button"
+            type="button"
+            onClick={() => {
+              incrementDamageMultiplier(0.01);
+            }}>+0.01
+          </button>
+          <button
+            className="button"
+            type="button"
+            onClick={() => {
+              incrementDamageMultiplier(0.1);
+            }}>+0.1
+          </button>
+        </div>
+      </div>
       <div className="machine-stats">
         <h3>Min Health: {minMachine.health.toFixed(2)}% ({minMachine.label})</h3>
         <h3>Avg Health: {averageHealth.toFixed(2)}%</h3>
       </div>
-      <div className="machine-heal-all">
-        <button
-          className="button is-success"
-          type="button"
-          onClick={() => {
-            reset();
-          }}><FontAwesomeIcon icon={faHeart}/> Heal All</button>
-      </div>
-
       <table className="table machine-list-table">
         <thead>
         <tr>
@@ -108,7 +167,7 @@ function MachineList({socket, password, machines}) {
               <div className="machine-label" style={machine.style}>{machine.label}</div>
             </td>
             <td className={getDamageClass(machine)}>{machine.health.toFixed(2)}%</td>
-            <td>
+            <td className="button-bar">
               <button
                 className="button"
                 type="button"
@@ -135,9 +194,26 @@ function MachineList({socket, password, machines}) {
                 type="button"
                 onClick={() => {
                   healMachine(machine);
-                }}><FontAwesomeIcon icon={faHeart}/></button>
+                }}><FontAwesomeIcon icon={faHeart}/>
+              </button>
             </td>
           </tr>))}
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>
+            <div className="machine-heal-all">
+              <button
+                className="button is-success"
+                type="button"
+                onClick={() => {
+                  reset();
+                }}><FontAwesomeIcon icon={faHeart}/> Heal All
+              </button>
+            </div>
+          </td>
+        </tr>
         </tbody>
       </table>
     </div>

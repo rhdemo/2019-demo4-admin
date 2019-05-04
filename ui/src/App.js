@@ -266,7 +266,7 @@ function App() {
                            optaplannerOptions={state.optaplannerOptions}/>
             </div>
             <div className="column">
-              <MachineList socket={socket} password={state.password} machines={state.machines}/>
+              <MachineList socket={socket} password={state.password} game={state.game} machines={state.machines}/>
             </div>
           </div>
         </section>
@@ -290,7 +290,7 @@ function App() {
             <Game socket={socket} password={state.password} game={state.game} stats={state.stats}/>
           </div>
           <div className="column">
-            <MachineList socket={socket} password={state.password} machines={state.machines}/>
+            <MachineList socket={socket} password={state.password} game={state.game} machines={state.machines}/>
           </div>
         </div>
       </section>

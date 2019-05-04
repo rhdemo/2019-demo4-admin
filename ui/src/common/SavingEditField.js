@@ -8,7 +8,7 @@ function SavingEditField({type, value, onSave}) {
   const [editMode, setEditMode] = useState(false);
   const [editValue, setEditValue] = useState(value);
 
-  function onEditClick() {
+  function onEdit() {
     setEditValue(value);
     setEditMode(true);
   }
@@ -17,13 +17,19 @@ function SavingEditField({type, value, onSave}) {
     setEditMode(false);
   }
 
-  function onSaveClick() {
+  function onSaveTriggered() {
     if (onSave) {
       onSave(editValue);
     } else {
       console.error("Saving Edit Field has no onSave function");
     }
     setEditMode(false);
+  }
+
+  function onKey(e) {
+    if (e.key === "Enter") {
+      onSaveTriggered();
+    }
   }
 
   if (editMode) {
@@ -34,6 +40,7 @@ function SavingEditField({type, value, onSave}) {
           type={type}
           value={editValue}
           onChange={e => setEditValue(e.target.value)}
+          onKeyDownCapture={onKey}
         />
         <button
           className="button"
@@ -44,7 +51,7 @@ function SavingEditField({type, value, onSave}) {
         <button
           className="button is-info"
           type="button"
-          onClick={onSaveClick}>
+          onClick={onSaveTriggered}>
           <FontAwesomeIcon icon={faSave}/>
         </button>
       </div>
@@ -57,7 +64,8 @@ function SavingEditField({type, value, onSave}) {
         className="input uneditable"
         type={type}
         value={value}
-        onClick={onEditClick}
+        onClick={onEdit}
+        onSelect={onEdit}
         readOnly
       />
     </div>);
