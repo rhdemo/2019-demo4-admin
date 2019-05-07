@@ -32,6 +32,8 @@ async function readAll(clientOptions) {
     }
   } while (!entry.done);
 
+  await clientIterator.close();
+
   client.disconnect();
 }
 

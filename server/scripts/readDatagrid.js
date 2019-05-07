@@ -20,6 +20,8 @@ async function readAll(options) {
 
   } while (!entry.done);
 
+  await clientIterator.close();
+
   client.disconnect();
 }
 

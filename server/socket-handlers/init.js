@@ -35,6 +35,8 @@ async function sendOptEvents(ws) {
     }
 
   } while (!entry.done);
+
+  await clientIterator.close();
 }
 
 async function sendOptOptions(ws) {
